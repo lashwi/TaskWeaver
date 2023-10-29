@@ -6,6 +6,11 @@ node -v
 ```
 The version of the node should be greater than v18. If not, please install the latest version.
 
+Navigate into the taskweaver directory and run npm install:
+```bash
+npm install
+```
+
 To run the app, run the following command:
 ```bash
 yarn dev
