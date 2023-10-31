@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  // Trello-specific
+  trelloBoardId String
+}
+
+model Task {
+  // Metadata
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // Relations
+  dependedBy    Arrow[]  @relation("fromTask", references: [id])
+  // Trello-specific
+  trelloCardId  String
+  trelloBoardId String
+  // Our data
+  // title         String
+  isPlaced      Boolean @default(false)
+  posX          Int     @default(0)
+  posY          Int     @default(0)
+  posZ          Int     @default(0)
+  color         String
+  completed     Boolean @default(false)
+}
+
+model Arrow {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  fromTask    Task     @relation("dependedBy", references: [id])
+  toTask      Task
+  curveTypeId Int      @default(0)
+  color       String
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  name      String?
+  // password  String
+  tasks     Task[]
+}
