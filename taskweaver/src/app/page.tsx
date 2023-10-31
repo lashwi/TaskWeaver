@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from "react";
-import GridCanvas from './GridCanvas';
+import GridCanvas from '@/components/Canvas';
 
 export default function Home() {
   return (
