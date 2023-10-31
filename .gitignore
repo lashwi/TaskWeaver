@@ -1,0 +1,10 @@
+# Secrets
+.env
+data/
+
+# Dependencies
+node_modules/
+
+# Editor config
+.vscode/
+
