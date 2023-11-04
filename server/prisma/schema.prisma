@@ -14,27 +14,37 @@ model Board {
   id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  name          String
   // Trello-specific
   trelloBoardId String
+  // Our data
+  name          String
+  owner         User     @relation("Owner", fields: [ownerId], references: [id])
+  ownerId       Int
+  visiblity     String   @default("private")
+  tasks         Task[]
 }
 
 model Task {
-  // Metadata
   id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  // Relations
-  dependedBy    Arrow[]  @relation("fromTask", references: [id])
   // Trello-specific
   trelloCardId  String
   trelloBoardId String
+  // TODO: trelloListId and more information such as priority, deadline, etc.
   // Our data
-  // title         String
+  title         String
+  // Relations
+  arrowsOut     Arrow[]  @relation("FromTask")
+  arrowsIn      Arrow[]  @relation("ToTask")
+  board         Board    @relation(fields: [boardId], references: [id])
+  boardId       Int
   isPlaced      Boolean @default(false)
   posX          Int     @default(0)
   posY          Int     @default(0)
   posZ          Int     @default(0)
+  sizeX         Int     @default(2)
+  sizeY         Int     @default(1)
   color         String
   completed     Boolean @default(false)
 }
@@ -43,18 +53,20 @@ model Arrow {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  fromTask    Task     @relation("dependedBy", references: [id])
-  toTask      Task
+  fromTask    Task     @relation("FromTask", fields: [fromTaskId], references: [id])
+  fromTaskId  Int
+  toTask      Task     @relation("ToTask", fields: [toTaskId], references: [id])
+  toTaskId    Int
   curveTypeId Int      @default(0)
   color       String
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  name      String?
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  email        String   @unique
+  name         String?
   // password  String
-  tasks     Task[]
+  ownedBoards  Board[]  @relation("Owner")
 }

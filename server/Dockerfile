@@ -1,6 +1,7 @@
 FROM node:18-alpine
 
 COPY ./node_modules /app/node_modules
+COPY ./prisma /app/prisma
 COPY ./src /app/src
 COPY ./package.json /app/package.json
 COPY ./package-lock.json /app/package-lock.json
