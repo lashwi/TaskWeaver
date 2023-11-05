@@ -11,7 +11,7 @@ interface Task {
   height: number;
   posX: number;
   posY: number;
-  posZ: number;
+  // posZ: number;
   color: string;
   description?: string;
   status?: string;
