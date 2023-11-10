@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import styles from '../styles/TaskPopup.module.css';
 
 // Define the props for the dropdown component
 interface DropdownProps {
@@ -19,7 +20,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
   };
 
   return (
-    <select value={selectedValue} onChange={handleSelectChange} style={{backgroundColor:'lightgray',margin:"2px", width:"120px"} }>
+    <select value={selectedValue} onChange={handleSelectChange} className="border-[#463D62] rounded-lg p-2">
       {options.map((option, index) => (
         <option key={index} value={option}>
           {option}
