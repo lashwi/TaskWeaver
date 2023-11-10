@@ -1,7 +1,7 @@
 // src/app/task-popup.tsx
 "use client";
 import React from 'react';
-import styles from '../styles/TaskPopup.module.css';
+import styles from './TaskPopup.module.css';
 import Dropdown from '@/components/Dropdown';
 
 type TaskPopupProps = {
@@ -45,8 +45,8 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
           </div>
 
           <div className={styles.rightPanel}>
-            <div className={styles.dropdowns}>
-              <div className={styles.dropdownColumn}>
+            <div className="flex flex-row w-full mb-4">
+              <div className="grid grid-cols-2 gap-2">
                 <Dropdown 
                   options={['Status', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
@@ -55,8 +55,6 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
                   options={['Deadline', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
                 />
-              </div>
-              <div className={styles.dropdownColumn}>
                 <Dropdown 
                   options={['Priority', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
