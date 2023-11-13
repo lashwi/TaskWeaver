@@ -7,42 +7,42 @@ interface Props {
 }
 
 export default function Task({ task }: Props) {
-  // const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-  // }
   const target_ref = useRef(null);
   const [task_state, setTaskState] = useState<Task>(task);
   // Event handlers
   const handleDrag = (e: any) => {
     const { target, left, top } = e;
-    setTaskState({
-      ...task_state,
-      posX: left,
-      posY: top,
-    });
-    console.log("dragging", left, top)
-    console.log(e)
+    target.style.left = `${left}px`;
+    target.style.top = `${top}px`;
   }
   const handleDragEnd = (e: any) => {
-    const { target, left, top } = e;
+    const { left, top } = e;
     setTaskState({
       ...task_state,
       posX: left,
       posY: top,
     });
-    console.log("dragging", left, top)
-    console.log(e)
   }
   const handleResize = (e: any) => {
-    const { target, clientX, clientY, width, height } = e;
-    // console.log(e);
+    const { target, width, height, drag } = e;
+    target.style.width = `${width}px`;
+    target.style.height = `${height}px`;
+    if (drag) {
+      if (drag.left) {
+        target.style.left = `${drag.left}px`;
+      }
+      if (drag.top) {
+        target.style.top = `${drag.top}px`;
+      }
+    }
+  }
+  const handleResizeEnd = (e: any) => {
+    const { width, height } = e;
     setTaskState({
       ...task_state,
-      // posX: clientX,
-      // posY: clientY,
       width: width,
       height: height
     });
-    console.log("resizing", clientX, clientY, width, height)
   }
   return (
     <>
@@ -55,7 +55,6 @@ export default function Task({ task }: Props) {
           width: task_state.width,
           height: task_state.height,
           background: task_state.color,
-          // transform: `translate(${task_state.posX}px, ${task_state.posY}px)`
         }}
         ref={target_ref}
       >
@@ -73,7 +72,9 @@ export default function Task({ task }: Props) {
         throttleDrag={1}
         throttleResize={1}
         onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
         onResize={handleResize}
+        onResizeEnd={handleResizeEnd}
       />
     </>
   );
