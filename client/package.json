@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fluentui/react-icons": "^2.0.222",
     "@rsuite/icons": "^1.0.3",
     "next": "14.0.0",
     "react": "^18",
