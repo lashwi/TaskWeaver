@@ -9,3 +9,29 @@
 @media (prefers-color-scheme: dark) {
 
 }
+
+.task-bubble {
+  background-color: #86FAB9;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  height: 100px;
+  width: 200px;
+  max-width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.block-bubble {
+  background-color: #da7648;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  height: 40px;
+  width: 200px;
+  max-width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
