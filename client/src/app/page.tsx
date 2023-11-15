@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from "react";
 import GridCanvas from '@/components/Canvas';
 import Task from '@/components/Task';
+import Toolbar from '@/components/Toolbar';
 import TaskDetails from '@/components/TaskDetails';
 import { useState } from 'react';
 import NavBar from '@/components/navigationbar';
@@ -27,6 +28,7 @@ export default function Home() {
       <h1 style={{ color: 'black' }}>Grid Canvas Example</h1>
       <NavBar />
       <GridCanvas />
+      <Toolbar />
       <div>
         {/* <TaskDetails /> */}
         {/* Button to open/close the TaskPopup */}
