@@ -1,0 +1,54 @@
+
+  /* NavBar.module.css */
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em; /* Adjust padding as needed */
+  background: #f8f8f8; /* Example background color */
+}
+
+.icon, .titleInput, .navigationButtons, .userArea {
+  display: flex;
+  align-items: center;
+}
+
+/* This will align the folder icon, input, and navigation buttons to the left */
+.icon, .titleInput, .navigationButtons {
+  margin-right: 3.5em; /* Spacing between elements, adjust as needed */
+}
+
+/* Style for the input area */
+.titleInput {
+  border: 1px solid #ddd; /* Example border style */
+  padding: 0.5em;
+  font-size: 1em;
+  width: 300px;
+}
+
+/* You might not need the addButton class if it's not used elsewhere */
+.addButton {
+  cursor: pointer;
+  margin-right: 0.5em; /* Spacing between buttons, adjust as needed */
+}
+
+/* This will align the login and profile area to the right */
+.userArea {
+  margin-left: auto; /* This pushes the .userArea to the right */
+}
+
+.loginButton, .profileButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.5em; /* Adjust padding as needed */
+  margin-left: 1.5em; /* Spacing between buttons, adjust as needed */
+}
+
+/* Optionally, you can add hover effects or other interactive styles */
+.loginButton:hover, .profileButton:hover {
+  background-color: #e9e9e9; /* Example hover background color */
+}
+
+/* Ensure the fontSize and color styles for FolderOpenIcon are applied in the component itself as inline styles or in this CSS module if needed */

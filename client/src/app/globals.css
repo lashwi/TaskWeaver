@@ -3,25 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.task-bubble {
+  background-color: #86FAB9;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  height: 100px;
+  width: 200px;
+  max-width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.block-bubble {
+  background-color: #da7648;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  height: 40px;
+  width: 200px;
+  max-width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
