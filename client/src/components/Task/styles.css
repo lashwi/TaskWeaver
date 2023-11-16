@@ -1,0 +1,12 @@
+.moveable-control.moveable-origin {
+  opacity: 0;
+}
+.task-container .moveable-direction {
+  opacity: 0;
+}
+.task-container:hover .moveable-control.moveable-direction {
+  opacity: 1;
+}
+.moveable-line.moveable-direction {
+  opacity: 0;
+}

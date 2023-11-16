@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from 'react';
 import Moveable from 'react-moveable';
+import './styles.css';
 
 interface Props {
   task: Task;
@@ -23,6 +24,9 @@ export default function Task({ task }: Props) {
       posY: top,
     });
   }
+  const handleResizeStart = (e: any) => {
+    e.setMin([50, 50]);
+  };
   const handleResize = (e: any) => {
     const { target, width, height, drag } = e;
     target.style.width = `${width}px`;
@@ -45,37 +49,43 @@ export default function Task({ task }: Props) {
     });
   }
   return (
-    <>
+    <span className="task-container pointer-events-none">
       <div
-        className="h-[100px] w-[200px] select-none"
+        className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
         style={{
-          position: 'absolute',
-          left: task_state.posX,
-          top: task_state.posY,
-          width: task_state.width,
-          height: task_state.height,
+          position: 'relative',
+          left: `${task_state.posX}px`,
+          top: `${task_state.posY}px`,
+          width: `${task_state.width}px`,
+          height: `${task_state.height}px`,
           background: task_state.color,
         }}
         ref={target_ref}
+        onClick={() => alert('clicked')}
       >
         <p>{task_state.title}</p>
       </div>
       <Moveable
+        className="pointer-events-auto"
         target={target_ref}
         draggable={true}
         resizable={true}
         snappable={true}
         snapThreshold={5}
         snapDirections={['top', 'left', 'bottom', 'right']}
-        verticalGuidelines={[0,50,100,150,200,250,300,400,450,500,550]}
-        horizontalGuidelines={[0,50,100,150,200,250,300,400,450,500,550]}
+        snapGridWidth={50}
+        snapGridHeight={50}
+        isDisplayGridGuidelines={true}
+        // verticalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
+        // horizontalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
         throttleDrag={1}
         throttleResize={1}
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
+        onResizeStart={handleResizeStart}
         onResize={handleResize}
         onResizeEnd={handleResizeEnd}
       />
-    </>
+    </span>
   );
 }
