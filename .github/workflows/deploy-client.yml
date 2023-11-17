@@ -11,7 +11,7 @@ jobs:
         working-directory: ./client/
     env:
       CI: true
-      CI_BUILD_DIR: ./client/out
+      CI_BUILD_DIR: out
     steps:
       - name: Check out main repository code
         uses: actions/checkout@v3
@@ -31,7 +31,7 @@ jobs:
           path: |
             ~/.npm
             ./client/node_modules
-            ${{ env.CI_BUILD_DIR }}
+            ./client/out
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -57,5 +57,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_PAGES_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+          workingDirectory: ./client/
           directory: ${{ env.CI_BUILD_DIR }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
