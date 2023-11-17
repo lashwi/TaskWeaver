@@ -71,10 +71,8 @@ export default function Task({ task }: Props) {
           background: task_state.color,
         }}
         ref={target_ref}
-        // onClick={() => alert('clicked')}
         onClick={handleTogglePopup}
       >
-        {showPopup && <TaskDetails onClose={handleTogglePopup} />}
         <p>{task_state.title}</p>
       </div>
       <Moveable
@@ -98,6 +96,7 @@ export default function Task({ task }: Props) {
         onResize={handleResize}
         onResizeEnd={handleResizeEnd}
       />
+      {showPopup && <TaskDetails onClose={handleTogglePopup} />}
     </span>
   );
 }
