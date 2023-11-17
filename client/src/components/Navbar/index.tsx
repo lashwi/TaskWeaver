@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <nav className={`${styles.navBar} absolute top-0 left-0 z-20`}>
       <div className={styles.icon}>
-        <FolderOpenIcon className={styles.addButton} style={{ fontSize: '40px', color: 'black' }} /> {/* Replace with your folder icon path */}
+        <FolderOpenIcon className={styles.addButton} style={{ fontSize: '24px', color: 'black' }} /> {/* Replace with your folder icon path */}
       </div>
       <input type="text" className={styles.titleInput} placeholder="Title" />
       <div className={styles.navigationButtons}>

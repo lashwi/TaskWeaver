@@ -20,10 +20,6 @@ export default function Home() {
       <Navbar />
       <Toolbar />
       <div>
-        {/* Button to open/close the TaskPopup */}
-        <button onClick={handleTogglePopup}>Task Details</button>
-        {/* Conditionally render the TaskPopup based on showPopup state */}
-        {showPopup && <TaskDetails onClose={handleTogglePopup} />}
       </div>
     </div>
   );

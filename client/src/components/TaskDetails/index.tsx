@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import styles from './TaskPopup.module.css';
 import Dropdown from '@/components/Dropdown';
 import { Button } from '@mui/joy';
+import CloseIcon from '@mui/icons-material/Close';
 import Select from 'react-select';
 
 import DependencyView from './DependencyView';
@@ -98,14 +99,13 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
             </div>
 
             <div >
-              <Button onClick={handleDependencyGraph}>View dependency graph</Button>
+              <Button onClick={handleDependencyGraph} className={styles.bottomButton}>View dependency graph</Button>
               {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
             </div>
           </div>
 
-          <div className={styles.closeButton} onClick={onClose}>
-            ✖️
-          </div>
+          
+          <CloseIcon className={styles.closeButton} onClick={onClose}></CloseIcon>
         </div>
       </div>
     </div>
