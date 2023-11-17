@@ -25,8 +25,8 @@ function DependencyView({ onClose }: DependencyGraphPopupProps) {
         </div>
         <div style={{ width: '50%', margin: '0px auto' }}>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-            {task1.map((number) =>
-              <div className="task-bubble">
+            {task1.map((number, idx) =>
+              <div className="task-bubble" key={idx}>
                 <label>{number}</label>
               </div>
             )}
@@ -42,8 +42,8 @@ function DependencyView({ onClose }: DependencyGraphPopupProps) {
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}> <label className='block-bubble'>Blocked By</label> </div>
 
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-            {task2.map((number) =>
-              <div className="task-bubble">
+            {task2.map((number, idx) =>
+              <div className="task-bubble" key={idx}>
                 <label>{number}</label>
               </div>
             )}

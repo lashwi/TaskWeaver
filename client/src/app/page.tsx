@@ -1,11 +1,9 @@
 "use client";
-
-import React from "react";
-import Task from '@/components/Task';
+import { useState } from 'react';
+import Board from '@/components/Board';
+import Navbar from '@/components/Navbar';
 import Toolbar from '@/components/Toolbar';
 import TaskDetails from '@/components/TaskDetails';
-import { useState } from 'react';
-import NavBar from '@/components/navigationbar';
 
 export default function Home() {
   // State to control whether the popup is visible
@@ -17,11 +15,9 @@ export default function Home() {
   };
 
   return (
-    <div style={{ background: 'white' }}>
-      {/* <Task title="Hello" details="Details maybe" /> */}
-      {/* <Task text="Task 2" details="More details" /> */}
-      <h1 style={{ color: 'black' }}>Grid Canvas Example</h1>
-      <NavBar />
+    <div className="relative">
+      <Board />
+      <Navbar />
       <Toolbar />
       <div>
         {/* Button to open/close the TaskPopup */}
