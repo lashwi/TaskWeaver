@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react';
 import Moveable from 'react-moveable';
 import './styles.css';
+import TaskDetails from '@/components/TaskDetails';
 
 interface Props {
   task: Task;
@@ -48,6 +49,15 @@ export default function Task({ task }: Props) {
       height: height
     });
   }
+
+  // State to control whether the popup is visible
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Function to toggle the popup visibility
+  const handleTogglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
   return (
     <span className="task-container pointer-events-none">
       <div
@@ -61,8 +71,10 @@ export default function Task({ task }: Props) {
           background: task_state.color,
         }}
         ref={target_ref}
-        onClick={() => alert('clicked')}
+        // onClick={() => alert('clicked')}
+        onClick={handleTogglePopup}
       >
+        {showPopup && <TaskDetails onClose={handleTogglePopup} />}
         <p>{task_state.title}</p>
       </div>
       <Moveable

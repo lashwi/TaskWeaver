@@ -27,18 +27,10 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
   };
 
   return (
-    <div className={styles.overlay}>
+    <div 
+
+      className={styles.overlay}>
       <div className={styles.popup}>
-        <div className={styles.closeButton} onClick={onClose} style={{ position: 'relative' }}>
-          <span style={{
-            position: 'absolute',
-            top: '0',
-            right: '5px',
-            fontSize: '24px',
-            lineHeight: '24px',
-            cursor: 'pointer' // Optional, for a pointer cursor on hover
-          }}>×</span>
-        </div>
         <div className={styles.panelContent}>
           <div className={styles.leftPanel}>
             <div className={styles.inputGroup}>
