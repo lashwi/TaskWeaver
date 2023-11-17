@@ -11,7 +11,7 @@ jobs:
         working-directory: ./client/
     env:
       CI: true
-      CI_BUILD_DIR: out
+      CI_BUILD_DIR: ./client/out
     steps:
       - name: Check out main repository code
         uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         with:
           path: |
             ~/.npm
-            node_modules
+            ./client/node_modules
             ${{ env.CI_BUILD_DIR }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
