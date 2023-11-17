@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Board from '@/components/Board';
-import NavBar from '@/components/navigationbar';
+import Navbar from '@/components/Navbar';
 import Toolbar from '@/components/Toolbar';
 import TaskDetails from '@/components/TaskDetails';
 
@@ -15,16 +15,16 @@ export default function Home() {
   };
 
   return (
-    <>
-      <NavBar />
-      <Toolbar />
+    <div className="relative">
       <Board />
+      <Navbar />
+      <Toolbar />
       <div>
         {/* Button to open/close the TaskPopup */}
         <button onClick={handleTogglePopup}>Task Details</button>
         {/* Conditionally render the TaskPopup based on showPopup state */}
         {showPopup && <TaskDetails onClose={handleTogglePopup} />}
       </div>
-    </>
+    </div>
   );
 }

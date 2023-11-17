@@ -29,7 +29,7 @@ export default function Board() {
     zoom: 1.0,
   });
   return (
-    <div className="absolute top-0 left-0 h-screen w-screen overflow-hidden bg-white">
+    <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
       <div
         style={{ zoom: board_view_state.zoom }}
         // className="board-bg-grid bg-white absolute left-1/2 top-1/2"

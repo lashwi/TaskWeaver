@@ -1,13 +1,12 @@
-import React from 'react';
-import styles from './NavBar.module.css'; // Your CSS module file for styles
+import styles from './Navbar.module.css';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const NavBar: React.FC = () => {
+export default function Navbar() {
   return (
-    <nav className={styles.navBar}>
+    <nav className={`${styles.navBar} absolute top-0 left-0 z-20`}>
       <div className={styles.icon}>
         <FolderOpenIcon className={styles.addButton} style={{ fontSize: '40px', color: 'black' }} /> {/* Replace with your folder icon path */}
       </div>
@@ -25,5 +24,3 @@ const NavBar: React.FC = () => {
     </nav>
   );
 };
-
-export default NavBar;
