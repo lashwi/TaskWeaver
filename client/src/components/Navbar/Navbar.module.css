@@ -2,11 +2,12 @@
   /* NavBar.module.css */
 
 .navBar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5em; /* Adjust padding as needed */
-  background: #f8f8f8; /* Example background color */
+  padding: 0.2em 0.5em; /* Adjust padding as needed */
+  background: rgba(239, 224, 255); /* Example background color */
 }
 
 .icon, .titleInput, .navigationButtons, .userArea {
@@ -22,7 +23,7 @@
 /* Style for the input area */
 .titleInput {
   border: 1px solid #ddd; /* Example border style */
-  padding: 0.5em;
+  padding: 0.2em;
   font-size: 1em;
   width: 300px;
 }

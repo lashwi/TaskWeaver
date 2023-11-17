@@ -1,5 +1,5 @@
 .board-bg-grid {
   background-size: 50px 50px;
-  background-image: radial-gradient(circle, #666666 2px, rgba(0, 0, 0, 0) 2px);
+  background-image: radial-gradient(circle, #c8c8c8 2px, rgba(0, 0, 0, 0) 2px);
   background-position: left 25px top 25px;
 }

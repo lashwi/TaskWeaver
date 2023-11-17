@@ -23,7 +23,7 @@
   max-height: 180vh;
   overflow: auto;
   padding: 20px;
-  font-size: large;
+  font-size: medium;
 }
 
 .leftPanel {
@@ -56,7 +56,7 @@
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: larger;
+  font-size: large;
 }
 
 .inputField {
@@ -85,9 +85,9 @@
 
 .bottomButton {
   margin-top: auto;
-  padding: 10px 20px;
+  padding: 0.2em 0.5em;
   text-align: center;
-  font-size: larger;
+  font-size: large;
   color: #efe0ff;
   background-color: #463D62;
   border-top: 1px solid #ddd;
@@ -114,4 +114,15 @@
   border-radius: 8px;
   margin-bottom: 8px;
   padding: 8px;
+}
+
+.closeButton {
+  color:#463D62;
+}
+
+.closeButton2 {
+  display: flex;
+  align-self: flex-end;
+  color:#463D62;
+  cursor: 'pointer';
 }
