@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 3001;
   pointer-events: auto;
 }
 
@@ -119,11 +119,12 @@
 
 .closeButton {
   color:#463D62;
+  cursor: pointer;
 }
 
 .closeButton2 {
   display: flex;
   align-self: flex-end;
   color:#463D62;
-  cursor: 'pointer';
+  cursor: pointer;
 }

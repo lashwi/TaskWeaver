@@ -27,6 +27,13 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
     setShowDependencyGraph(!showDependencyGraph);
   };
 
+  const other_tasks = [
+    { value: '1', label: 'Gather wood' },
+    { value: '2', label: 'Build door' },
+    { value: '4', label: 'Find cool tree' },
+    { value: '5', label: 'Assemble treehouse' },
+  ];
+
   return (
     <div 
 
@@ -79,7 +86,7 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
               <Select
                 isMulti
                 name="colors"
-                options={[{ value: 'Task1', label: 'Task1' }, { value: 'Task2', label: 'Task2' }]}
+                options={other_tasks}
                 className="basic-multi-select"
                 classNamePrefix="select"
               />
@@ -92,7 +99,7 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
               <Select
                 isMulti
                 name="colors"
-                options={[{ value: 'Task1', label: 'Task1' }, { value: 'Task2', label: 'Task2' }]}
+                options={other_tasks}
                 className="basic-multi-select"
                 classNamePrefix="select"
               />

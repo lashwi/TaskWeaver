@@ -8,16 +8,16 @@ type DependencyGraphPopupProps = {
 };
 
 function DependencyView({ onClose }: DependencyGraphPopupProps) {
-  let task1 = ['Task1', 'Task2'];
-  let task2 = ['Task3', 'Task4', 'Task 5'];
-  let task = ['Task']
+  let from_tasks = ['Gather wood'];
+  let to_tasks = ['Assemble treehouse'];
+  let task = ['Build walls'];
   return (
     <div className={styles.overlay}>
       <div className={styles.popup}>
       <CloseIcon className={styles.closeButton2} onClick={onClose}></CloseIcon>
         <div style={{ width: '50%', margin: '0px auto' }}>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-            {task1.map((number, idx) =>
+            {from_tasks.map((number, idx) =>
               <div className="task-bubble" key={idx}>
                 <label>{number}</label>
               </div>
@@ -34,7 +34,7 @@ function DependencyView({ onClose }: DependencyGraphPopupProps) {
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}> <label className='block-bubble'>Blocked By</label> </div>
 
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-            {task2.map((number, idx) =>
+            {to_tasks.map((number, idx) =>
               <div className="task-bubble" key={idx}>
                 <label>{number}</label>
               </div>

@@ -12,14 +12,50 @@ interface BoardViewState {
 const tasks = [
   {
     id: 1,
-    title: 'Task 1 iwth a lot of text arnteionarsetioanio sntan rstnrasen traie tnrasn entr sntseans trenienart ineta rsniea tr',
+    title: 'Gather wood',
     description: 'Example description!',
     width: 200,
     height: 100,
-    posX: 0,
+    posX: 200,
+    posY: 350,
+    color: "#f7d9c4"
+  },
+  {
+    id: 2,
+    title: 'Build door',
+    width: 200,
+    height: 100,
+    posX: 500,
+    posY: 300,
+    color: "#faedcb"
+  },
+  {
+    id: 3,
+    title: 'Build walls',
+    width: 200,
+    height: 100,
+    posX: 500,
+    posY: 450,
+    color: "#faedcb"
+  },
+  {
+    id: 4,
+    title: 'Find cool tree',
+    width: 200,
+    height: 100,
+    posX: 300,
     posY: 100,
-    color: "#ff0000"
-  }
+    color: "#f7d9c4"
+  },
+  {
+    id: 5,
+    title: 'Assemble treehouse',
+    width: 200,
+    height: 100,
+    posX: 800,
+    posY: 250,
+    color: "#c9e4de"
+  },
 ];
 
 export default function Board() {
@@ -35,7 +71,12 @@ export default function Board() {
         // className="board-bg-grid bg-white absolute left-1/2 top-1/2"
         className="board-bg-grid bg-white absolute h-full w-full"
       >
-        <Task task={tasks[0]} />
+        {tasks.map((task, idx) => (
+          <Task
+            key={idx}
+            task={task}
+          />
+        ))}
       </div>
     </div>
   );

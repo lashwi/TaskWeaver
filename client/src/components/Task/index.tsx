@@ -59,7 +59,7 @@ export default function Task({ task }: Props) {
   };
 
   return (
-    <span className="task-container pointer-events-none">
+    <span className="absolute left-0 top-0 task-container pointer-events-none">
       <div
         className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
         style={{
