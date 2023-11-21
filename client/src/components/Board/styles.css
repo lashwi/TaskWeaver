@@ -3,3 +3,15 @@
   background-image: radial-gradient(circle, #c8c8c8 2px, rgba(0, 0, 0, 0) 2px);
   background-position: left 25px top 25px;
 }
+
+.rectangle {
+  position: fixed;
+  top: 100;
+  left: 100;
+  background-color: rgba(239, 224, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

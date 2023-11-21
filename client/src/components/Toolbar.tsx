@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { IconButton } from 'rsuite';
 import {
   ArrowFlowUpRight24Regular,
@@ -8,7 +7,11 @@ import {
   Cursor24Regular
 } from "@fluentui/react-icons"
 
-export default function Toolbar() {
+interface toolbarProps {
+  addTask: () => void;
+}
+
+export default function Toolbar({ addTask = () => {}}: toolbarProps) {
   const changeCursor = (cursorType: string) => {
     document.body.style.cursor = cursorType;
   };
@@ -32,6 +35,7 @@ export default function Toolbar() {
           appearance='primary'
           color='blue'
           size='lg'
+          onClick={() => addTask()}
         />
         <IconButton icon={<ArrowFlowUpRight24Regular />} 
           appearance='primary'
