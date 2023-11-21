@@ -4,7 +4,8 @@ import Board from '@/components/Board';
 import Navbar from '@/components/Navbar';
 import Toolbar from '@/components/Toolbar';
 import TaskDetails from '@/components/TaskDetails';
-import Task from '@/components/Task'
+import Task from '@/components/Task';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export default function Home() {
   // State to control whether the popup is visible
