@@ -1,5 +1,9 @@
 "use client";
 import React from 'react';
+import Task from '@/components/Task';
+import setTaskList from '../Board/index.tsx';
+import taskList from '../Board/index.tsx'
+import Board from '@/components/Board'
 import { Button, IconButton, ButtonGroup, ButtonToolbar } from 'rsuite';
 import {
   ArrowFlowUpRight24Regular,
@@ -10,7 +14,11 @@ import {
 
 import styles from './Toolbar.module.css';
 
-export default function Toolbar() {
+interface toolbarProps {
+  addTask: ()=>void
+}
+
+export default function Toolbar({ addTask = () => {}}: toolbarProps) {
   const changeCursor = (cursorType: string) => {
     document.body.style.cursor = cursorType;
   };
@@ -33,11 +41,13 @@ export default function Toolbar() {
           appearance='primary'
           color='blue'
           size='lg'
+          onClick={() => addTask()}
         />
         <IconButton icon={<ArrowFlowUpRight24Regular />} 
           appearance='primary'
           color='blue'
           size='lg'
+          
         />
       </div>
     </div>
