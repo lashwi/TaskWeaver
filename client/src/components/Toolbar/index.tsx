@@ -1,9 +1,5 @@
 "use client";
 import React from 'react';
-import Task from '@/components/Task';
-import setTaskList from '../Board/index.tsx';
-import taskList from '../Board/index.tsx'
-import Board from '@/components/Board'
 import { Button, IconButton, ButtonGroup, ButtonToolbar } from 'rsuite';
 import {
   ArrowFlowUpRight24Regular,
