@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 :root {
-
+  --color-primary: 127, 0, 247;
+  --color-secondary: 88, 0, 133;
+  --color-text: 0, 0, 0;
+  --color-surface-000: 255, 255, 255;
+  --color-surface-050: 238, 238, 238;
+  --color-surface-100: 221, 221, 221;
+  --color-surface-150: 204, 204, 204;
+  --color-surface-200: 187, 187, 187;
+  --color-surface-250: 170, 170, 170;
+  --color-surface-300: 153, 153, 153;
 }
 
 @media (prefers-color-scheme: dark) {

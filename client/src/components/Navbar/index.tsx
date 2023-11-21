@@ -6,7 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Navbar() {
   return (
-    <nav className={`${styles.navBar} absolute top-0 left-0 z-20`}>
+    <nav className="bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-2xl flex absolute top-4 left-4 right-4 z-20 justify-between items-center px-1 py-2">
       <div className={styles.icon}>
         <FolderOpenIcon className={styles.addButton} style={{ fontSize: '24px', color: 'black' }} /> {/* Replace with your folder icon path */}
       </div>
