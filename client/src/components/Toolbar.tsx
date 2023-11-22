@@ -9,9 +9,10 @@ import {
 
 interface toolbarProps {
   addTask: () => void;
+  handleAddArrowMode: () => void;
 }
 
-export default function Toolbar({ addTask = () => {}}: toolbarProps) {
+export default function Toolbar({ addTask = () => {},  handleAddArrowMode = () => {}}: toolbarProps) {
   const changeCursor = (cursorType: string) => {
     document.body.style.cursor = cursorType;
   };
@@ -41,6 +42,7 @@ export default function Toolbar({ addTask = () => {}}: toolbarProps) {
           appearance='primary'
           color='blue'
           size='lg'
+          onClick={() => handleAddArrowMode()}
         />
       </div>
     </div>

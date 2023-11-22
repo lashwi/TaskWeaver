@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import Task from '@/components/Task';
 import './styles.css';
-import Toolbar from '@/components/Toolbar'
+import Toolbar from '@/components/Toolbar';
+import Xarrow, { Xwrapper } from 'react-xarrows';
 
 interface BoardViewState {
   offsetX: number;
@@ -66,6 +67,13 @@ export default function Board() {
     },
   ]);
 
+  const [arrowList, setArrowList] = useState([
+    {
+      from: "1",
+      to: "2"
+    }
+  ]);
+
   const handleAddTask = () => {
     var newTasks = tasks.slice();
     newTasks.push({
@@ -80,21 +88,64 @@ export default function Board() {
     setTaskList(newTasks);
   };
 
+  const handleAddArrow = (firstId: string, secondId: string) => {
+    var newArrowList = arrowList.slice();
+    newArrowList.push({
+      from: firstId,
+      to: secondId
+    });
+    setArrowList(newArrowList);
+  };
+
+  const [firstId, setFirstId]: any = useState(null);
+  const [secondId, setSecondId]: any = useState(null);
+  const [isAddArrowMode, setAddArrowMode] = useState(false);
+
+  const handleAddArrowMode = () => {
+    setAddArrowMode(!isAddArrowMode);
+    setFirstId(null);
+    setSecondId(null);
+  }
+
+  const handleDivClicks = (id: string) => {
+    if (firstId == null) {
+      setFirstId(id);
+    } else if (secondId == null) {
+      setSecondId(id);
+    } else {
+      setFirstId(null);
+      setSecondId(null);
+    }
+  }
+
+  useEffect(() => {
+    if (firstId !== null && secondId !== null) {
+      handleAddArrow(firstId, secondId);
+      setFirstId(null);
+      setSecondId(null);
+    }
+  }, [secondId]);
+
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
-      <Toolbar addTask={handleAddTask}/>
-      <div
-        style={{ zoom: board_view_state.zoom }}
-        // className="board-bg-grid bg-white absolute left-1/2 top-1/2"
-        className="board-bg-grid bg-white absolute h-full w-full">
-        
-        {tasks.map((task, idx) => (
-          <Task key={idx}
-                task={task}
-          />
-      ))}
-      </div>
+      <Toolbar addTask={handleAddTask} handleAddArrowMode={handleAddArrowMode} />
+      <Xwrapper>
+        <div
+          style={{ zoom: board_view_state.zoom }}
+          // className="board-bg-grid bg-white absolute left-1/2 top-1/2"
+          className="board-bg-grid bg-white absolute h-full w-full">
+          {tasks.map((task, idx) => (
+            <Task key={idx}
+              task={task}
+              isAddArrowMode={isAddArrowMode}
+              handleDivClicks={handleDivClicks}
+            />
+          ))}
+          {arrowList.map((arrow, idx) => (
+            <Xarrow key={idx} start={arrow.from} end={arrow.to} />
+          ))}
+        </div>
+      </Xwrapper>
     </div>
-    
   );
 };
