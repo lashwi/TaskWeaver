@@ -4,6 +4,7 @@ import Moveable from 'react-moveable';
 import './styles.css';
 import TaskDetails from '@/components/TaskDetails';
 import { useXarrow } from 'react-xarrows';
+import Persona from '@/components/Persona/Persona';
 
 interface Props {
   task: Task;
@@ -88,6 +89,8 @@ export default function Task({ task, isAddArrowMode, handleDivClicks }: Props) {
         onClick={() => handleClick(task.id.toString())}
       >
         <p>{task_state.title}</p>
+        <div className='bottom-div'><Persona /></div>
+        
       </div>
       <Moveable
         className="pointer-events-auto"

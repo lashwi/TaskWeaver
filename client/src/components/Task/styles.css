@@ -10,3 +10,8 @@
 .moveable-line.moveable-direction {
   opacity: 0;
 }
+
+.bottom-div {
+  position: absolute;
+  bottom: 0;
+}

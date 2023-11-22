@@ -110,7 +110,7 @@ export default function Board() {
   const handleDivClicks = (id: string) => {
     if (firstId == null) {
       setFirstId(id);
-    } else if (secondId == null) {
+    } else if (secondId == null && id !== firstId) {
       setSecondId(id);
     } else {
       setFirstId(null);
@@ -119,7 +119,7 @@ export default function Board() {
   }
 
   useEffect(() => {
-    if (firstId !== null && secondId !== null) {
+    if (firstId !== null && secondId !== null && firstId !== secondId) {
       handleAddArrow(firstId, secondId);
       setFirstId(null);
       setSecondId(null);
