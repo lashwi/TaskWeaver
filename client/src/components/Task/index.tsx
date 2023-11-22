@@ -82,6 +82,7 @@ export default function Task({ task, isAddArrowMode, handleDivClicks }: Props) {
           width: `${task_state.width}px`,
           height: `${task_state.height}px`,
           background: task_state.color,
+          cursor: isAddArrowMode ? 'grab' : 'default'
         }}
         ref={target_ref}
         onClick={() => handleClick(task.id.toString())}
