@@ -6,9 +6,10 @@ import TaskDetails from '@/components/TaskDetails';
 
 interface Props {
   task: Task;
+  onTaskClick: () => void; // New prop to handle task click
 }
 
-export default function Task({ task }: Props) {
+export default function Task({ task, onTaskClick }: Props) {
   const target_ref = useRef(null);
   const [task_state, setTaskState] = useState<Task>(task);
   // Event handlers
@@ -58,6 +59,11 @@ export default function Task({ task }: Props) {
     setShowPopup(!showPopup);
   };
 
+  // Handle task click to open the ResizablePane
+  const handleClick = () => {
+    onTaskClick();
+  };
+
   return (
     <span className="absolute left-0 top-0 task-container pointer-events-none">
       <div
@@ -71,7 +77,8 @@ export default function Task({ task }: Props) {
           background: task_state.color,
         }}
         ref={target_ref}
-        onClick={handleTogglePopup}
+        // onClick={handleTogglePopup}
+        onClick={handleClick}
       >
         <p>{task_state.title}</p>
       </div>
@@ -96,7 +103,7 @@ export default function Task({ task }: Props) {
         onResize={handleResize}
         onResizeEnd={handleResizeEnd}
       />
-      {showPopup && <TaskDetails onClose={handleTogglePopup} />}
+      {/* {showPopup && <TaskDetails onClose={handleTogglePopup} />} */}
     </span>
   );
 }

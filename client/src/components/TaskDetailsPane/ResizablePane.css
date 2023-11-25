@@ -1,0 +1,88 @@
+/* ResizablePane.css */
+.resizable-pane {
+    position: absolute;
+    top: 80px;
+    right: 15px;
+    width: 100px; /* Initially set the width to 0 */
+    height: 100%; /* Full height of the container */
+    background-color: white;
+    border: 1px solid #b3b0b0;
+    border-radius: 4px;
+    padding: 10px;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+  
+  .resizable-pane.open {
+    width: 400px; /* Adjust as needed */
+    z-index: 2;
+  }
+  
+  .pane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .assignee-section{
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .title { 
+    margin-right: 5px;
+  }
+  
+  input{
+    width: 100%;
+    border: 1px solid #ccc;
+  }
+
+  .description-section{
+    width: 100%;
+    resize: none;
+  
+    margin-top: 0px;
+  }
+  textarea{
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 4px;
+    padding: 5px;
+    height: 140px;
+    margin-bottom: 10px;
+  }
+
+  .closeButton2 {
+    display: flex;
+    align-self: flex-end;
+    color:#463D62;
+    cursor: pointer;
+  }
+  
+  .inputGroup {
+    margin-bottom: 12px;
+  }
+
+  .addButton {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .bottomButton {
+    margin-top: auto;
+    padding: 0.2em 0.5em;
+    text-align: center;
+    font-size: large;
+    color: #efe0ff;
+    background-color: #463D62;
+    border-top: 1px solid #ddd;
+    border-radius: 12px;
+    cursor: pointer;
+  }

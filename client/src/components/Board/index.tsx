@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Task from '@/components/Task';
 import './styles.css';
 import Toolbar from '@/components/Toolbar'
+import ResizablePane from '@/components/TaskDetailsPane'
 
 interface BoardViewState {
   offsetX: number;
@@ -80,6 +81,17 @@ export default function Board() {
     setTaskList(newTasks);
   };
 
+  const [ispaneOpen, setPaneOpen] = useState(false);
+
+  const openPane = () => {
+    if(ispaneOpen==false){
+      setPaneOpen(!ispaneOpen);
+    }
+  };
+  const closePane = () => {
+    setPaneOpen(!ispaneOpen);
+  }
+
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
       <Toolbar addTask={handleAddTask}/>
@@ -91,9 +103,11 @@ export default function Board() {
         {tasks.map((task, idx) => (
           <Task key={idx}
                 task={task}
+                onTaskClick={openPane}
           />
       ))}
       </div>
+      {ispaneOpen && <ResizablePane isOpen={true} onClose={closePane} />}
     </div>
     
   );
