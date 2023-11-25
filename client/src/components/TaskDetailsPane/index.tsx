@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
-import { Resizable } from 'react-resizable'; 
 import './ResizablePane.css';
 import CloseIcon from '@mui/icons-material/Close';
-import { HorizontalRule } from '@mui/icons-material';
-import Dropdown from '../Dropdown';
+import Dropdown from '@/components/Dropdown';
 import Select  from 'react-select';
 import { Button } from '@mui/joy';
-import DependencyView from '../TaskDetails/DependencyView';
+import DependencyView from '@/components/TaskDetails/DependencyView';
 
 interface ResizablePaneProps {
   isOpen: boolean;
@@ -69,12 +67,6 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose }) => {
 
   return (
     <Draggable handle=".pane-header" bounds="parent">
-        <Resizable
-            width={width}
-            height={height}
-            onResize={handleResize}
-            draggableOpts={{ bounds: 'parent' }}
-        >
         <div
             className={`resizable-pane ${isOpen ? 'open' : ''}`}
             style={{ width: `${width}px`, height: `${height}px` }}
@@ -152,7 +144,6 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose }) => {
             {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
         </div>
       </div>
-      </Resizable>
     </Draggable>
     
   );
