@@ -79,103 +79,105 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose, task }) 
   const [task_state, setTaskState] = useState<Task>(task);
 
   return (
-    <Draggable handle=".pane-header" bounds="parent">
-        <div
-            className={`resizable-pane ${isOpen ? 'open' : ''}`}
-            style={{ width: `${width}px`, height: `${height}px` }}
-        >
-
-        <div className="pane-header">
-          <h2></h2>
-          <CloseIcon className="closeButton2" onClick={onClose}></CloseIcon>
-        </div>
-
-        <div className="assignee-section">
-          <div className="title">Title: </div>
-          <input type="text" placeholder="Title" defaultValue={task_state.title} onChange={(e) => setTitle(e.target.value)} />
-        </div>
-
-        {/* <div style={{display:'flex', alignItems:'center'}}>
-          <div className="title">Add Assignee</div>
-          <button onClick={handleAddAssignee}> +</button>
-        </div> */}
-        <div className="inputGroup" style={{top: '15px'}}>
-            <div style={{ display: 'flex', alignItems: 'center',top: '15px' }}>
-                <div style={{ marginRight: "6px" }}>Add Assignee:</div>
-                <div className="addButton">+</div>
-            </div>
-            <Select
-                isMulti
-                name="colors"
-                options={personas}
-                className="basic-multi-select"
-                classNamePrefix="select"
+    <div>
+      <Draggable handle=".pane-header" bounds="parent">
+          <div
+              className={`resizable-pane ${isOpen ? 'open' : ''}`}
+              style={{ width: `${width}px`, height: `${height}px` }}
+          >
+  
+          <div className="pane-header">
+            <h2></h2>
+            <CloseIcon className="closeButton2" onClick={onClose}></CloseIcon>
+          </div>
+  
+          <div className="assignee-section">
+            <div className="title">Title: </div>
+            <input type="text" placeholder="Title" defaultValue={task_state.title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+  
+          {/* <div style={{display:'flex', alignItems:'center'}}>
+            <div className="title">Add Assignee</div>
+            <button onClick={handleAddAssignee}> +</button>
+          </div> */}
+          <div className="inputGroup" style={{top: '15px'}}>
+              <div style={{ display: 'flex', alignItems: 'center',top: '15px' }}>
+                  <div style={{ marginRight: "6px" }}>Add Assignee:</div>
+                  <div className="addButton">+</div>
+              </div>
+              <Select
+                  isMulti
+                  name="colors"
+                  options={personas}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+              />
+          </div>
+  
+  
+          <div className="description-section">
+              Description:
+            <textarea
+              placeholder="Task Description"
+              // value={description}
+              defaultValue={task_state.description}
+              onChange={(e) =>handleDescriptionChange(e.target.value)}
             />
+          </div>
+          <div className='flex flex-row w-full mb-4'>
+              <div className='grid grid-cols-2 gap-2 border w-full'>
+                  <Dropdown 
+                     options={['Status','Option2','Option3']}
+                     onChange={handleDropdownChange}
+                  />
+                  <Dropdown 
+                     options={['Deadline','Option2','Option3']}
+                     onChange={handleDropdownChange}
+                  />
+                  <Dropdown 
+                     options={['Priority','Option2','Option3']}
+                     onChange={handleDropdownChange}
+                  />
+                  <Dropdown 
+                     options={['Time Needed','Option2','Option3']}
+                     onChange={handleDropdownChange}
+                  />
+              </div>
+          </div>
+          <div className="inputGroup">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ marginRight: "6px" }}>This task depends on:</div>
+                  <div className="addButton">+</div>
+              </div>
+              <Select
+                  isMulti
+                  name="colors"
+                  options={other_tasks}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+              />
+          </div>
+          <div className= "inputGroup">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ marginRight: "6px" }}>Depends on this task:</div>
+                  <div className="addButton">+</div>
+              </div>
+              <Select
+                  isMulti
+                  name="colors"
+                  options={other_tasks}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+              />
+          </div>
+  
+          <div >
+              <Button onClick={handleDependencyGraph} className="bottomButton">View dependency graph</Button>
+          </div>
         </div>
-
-
-        <div className="description-section">
-            Description:
-          <textarea
-            placeholder="Task Description"
-            // value={description}
-            defaultValue={task_state.description}
-            onChange={(e) =>handleDescriptionChange(e.target.value)}
-          />
-        </div>
-        <div className='flex flex-row w-full mb-4'>
-            <div className='grid grid-cols-2 gap-2 border w-full'>
-                <Dropdown 
-                   options={['Status','Option2','Option3']}
-                   onChange={handleDropdownChange}
-                />
-                <Dropdown 
-                   options={['Deadline','Option2','Option3']}
-                   onChange={handleDropdownChange}
-                />
-                <Dropdown 
-                   options={['Priority','Option2','Option3']}
-                   onChange={handleDropdownChange}
-                />
-                <Dropdown 
-                   options={['Time Needed','Option2','Option3']}
-                   onChange={handleDropdownChange}
-                />
-            </div>
-        </div>
-        <div className="inputGroup">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ marginRight: "6px" }}>This task depends on:</div>
-                <div className="addButton">+</div>
-            </div>
-            <Select
-                isMulti
-                name="colors"
-                options={other_tasks}
-                className="basic-multi-select"
-                classNamePrefix="select"
-            />
-        </div>
-        <div className= "inputGroup">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ marginRight: "6px" }}>Depends on this task:</div>
-                <div className="addButton">+</div>
-            </div>
-            <Select
-                isMulti
-                name="colors"
-                options={other_tasks}
-                className="basic-multi-select"
-                classNamePrefix="select"
-            />
-        </div>
-
-        <div >
-            <Button onClick={handleDependencyGraph} className="bottomButton">View dependency graph</Button>
-            {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
-        </div>
-      </div>
-    </Draggable>
+      </Draggable>
+      {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
+    </div>
     
   );
 };
