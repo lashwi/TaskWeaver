@@ -55,7 +55,7 @@ export default function Task({ task, handleTaskClick }: Props) {
 
   // Handle task click to open the ResizablePane
   const handleClick = () => {
-    onTaskClick(task_state.id-1);
+    handleTaskClick(task_state.id-1);
   };
 
   return (
