@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from 'react';
-import Task from '@/components/Task';
-import './styles.css';
-import Toolbar from '@/components/Toolbar';
 import Xarrow, { Xwrapper } from 'react-xarrows';
+import Task from '@/components/Task';
+import TaskDetails from '@/components/TaskDetails';
+import Toolbar from '@/components/Toolbar';
+import './styles.css';
 
 interface BoardViewState {
   offsetX: number;
@@ -11,13 +12,17 @@ interface BoardViewState {
   zoom: number;
 };
 
-interface TaskToolState {
+interface PointerToolState {
+  _selected_task: Task | null;
+};
 
+interface TaskToolState {
+  color: string;
 };
 
 interface ArrowToolState {
-  firstId: number;
   color: string;
+  _firstId: number;
 };
 
 export enum Tool {
@@ -83,7 +88,7 @@ export default function Board() {
     },
   ]);
 
-  const [arrowList, setArrowList] = useState<Arrow[]>([
+  const [arrows, setarrows] = useState<Arrow[]>([
     {
       id: 1,
       from: 1,
@@ -92,33 +97,36 @@ export default function Board() {
     }
   ]);
 
-  // TODO: Remove this state and use the state from Toolbar
-  // const [isAddArrowMode, setAddArrowMode] = useState(false);
-  const [selectedTool, setSelectedTool] = useState<Tool>(Tool.Pointer);
-
   // Tool-specific states
+  const [selectedTool, setSelectedTool] = useState<Tool>(Tool.Pointer);
+  const [pointerToolState, setPointerToolState] = useState<PointerToolState>({
+    _selected_task: null
+  });
   const [arrowToolState, setArrowToolState] = useState<ArrowToolState>({
-    firstId: -1,
-    color: "#0000ff"
+    color: "#0000ff",
+    _firstId: -1
   });
 
   const handleSetTool = (t: Tool) => {
     setSelectedTool(t);
     switch (t) {
       case Tool.Pointer:
+        console.log('Selected pointer tool');
         handleSetPointerTool();
         break;
       case Tool.Move:
+        console.log('Selected move tool');
         handleSetMoveTool();
         break;
       case Tool.Task:
+        console.log('Selected task tool');
         handleAddTask();
         break;
       case Tool.Arrow:
         console.log('Selected arrow tool');
         setArrowToolState({
           ...arrowToolState,
-          firstId: -1
+          _firstId: -1
         });
         break;
     };
@@ -128,24 +136,31 @@ export default function Board() {
     console.log(`Clicked task ${id}`);
     switch (selectedTool) {
       case Tool.Pointer:
+        const selected_task = tasks.find((t) => t.id == id);
+        if (selected_task) {
+          setPointerToolState({
+            ...pointerToolState,
+            _selected_task: selected_task
+          });
+        }
         break;
       case Tool.Move:
         break;
       case Tool.Task:
         break;
       case Tool.Arrow:
-        if (id == arrowToolState.firstId) {
+        if (id == arrowToolState._firstId) {
           break;
-        } else if (arrowToolState.firstId == -1) {
+        } else if (arrowToolState._firstId == -1) {
           setArrowToolState({
             ...arrowToolState,
-            firstId: id
+            _firstId: id
           });
         } else {
-          addArrow(arrowToolState.firstId, id);
+          addArrow(arrowToolState._firstId, id);
           setArrowToolState({
             ...arrowToolState,
-            firstId: -1
+            _firstId: -1
           });
           // TODO: Support switching back to previous tool
           // setSelectedTool(Tool.Pointer);
@@ -155,12 +170,10 @@ export default function Board() {
   };
 
   const handleSetPointerTool = () => {
-    console.log('Selected pointer tool');
     // TODO: Set CSS cursor to 'default'
   };
 
   const handleSetMoveTool = () => {
-    console.log('Move tool selected');
     // TODO: Set CSS cursor to 'move'
   };
 
@@ -178,14 +191,14 @@ export default function Board() {
     setTaskList(newTasks);
   };
 
-  const addArrow = (firstId: number, secondId: number) => {
+  const addArrow = (firstTaskId: number, secondTaskId: number) => {
     const newArrow: Arrow = {
-      id: arrowList.length + 1, // TODO: Better way of assigning arrow IDs
-      from: firstId,
-      to: secondId,
+      id: arrows.length + 1, // TODO: Better way of assigning arrow IDs
+      from: firstTaskId,
+      to: secondTaskId,
       color: arrowToolState.color
     };
-    setArrowList([...arrowList, newArrow]);
+    setarrows([...arrows, newArrow]);
   };
 
   return (
@@ -207,7 +220,7 @@ export default function Board() {
               handleTaskClick={handleTaskClick}
             />
           ))}
-          {arrowList.map((arrow, idx) => (
+          {arrows.map((arrow, idx) => (
             <Xarrow
               key={idx}
               start={arrow.from.toString()}
@@ -216,6 +229,14 @@ export default function Board() {
           ))}
         </div>
       </Xwrapper>
+      {pointerToolState._selected_task ? (
+        <TaskDetails
+          task={pointerToolState._selected_task}
+          otherTasks={tasks.filter((task) => task.id != pointerToolState._selected_task!.id)}
+          arrows={arrows}
+          handleClose={() => setPointerToolState({...pointerToolState, _selected_task: null })}
+        />
+      ) : null}
     </div>
   );
 };
