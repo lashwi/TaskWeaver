@@ -9,11 +9,20 @@ import Select from 'react-select';
 
 import DependencyView from './DependencyView';
 
-type TaskPopupProps = {
-  onClose: () => void; // function to close the popup
+interface Props {
+  task: Task;
+  otherTasks: Task[];
+  arrows: Arrow[];
+  handleClose: () => void;
 };
 
-export default function TaskDetails({ onClose }: TaskPopupProps) {
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+export default function TaskDetails(props: Props) {
+  const { task, otherTasks, arrows, handleClose } = props;
   const handleDropdownChange = (selectedValue: string) => {
     console.log('User selected:', selectedValue);
     // Perform further actions based on the selected value
@@ -27,32 +36,39 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
     setShowDependencyGraph(!showDependencyGraph);
   };
 
-  const other_tasks = [
-    { value: '1', label: 'Gather wood' },
-    { value: '2', label: 'Build door' },
-    { value: '4', label: 'Find cool tree' },
-    { value: '5', label: 'Assemble treehouse' },
-  ];
+  const taskOptions: OptionType[] = [];
+  otherTasks.map((t) => {
+    taskOptions.push({
+      value: t.id.toString(),
+      label: t.title
+    })
+  });
 
   return (
-    <div 
-
-      className={styles.overlay}>
+    <div className={styles.overlay}>
       <div className={styles.popup}>
         <div className={styles.panelContent}>
           <div className={styles.leftPanel}>
             <div className={styles.inputGroup}>
-              <input className={styles.inputFieldTitle} placeholder="Untitled task" />
+              <input
+                className={styles.inputFieldTitle}
+                placeholder="Enter task name"
+                defaultValue={task.title}
+              />
             </div>
             <div className={styles.inputGroup}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="flex items-center">
                 <div style={{ marginRight: "6px" }}>Assignees:</div>
                 <div className={styles.addButton}>+</div>
               </div>
             </div>
             <div className={styles.inputGroup}>
-              Description:
-              <textarea className={styles.inputField} placeholder="Description"></textarea>
+              <span>Description:</span>
+              <textarea
+                className={styles.inputField}
+                placeholder="Enter task description"
+                defaultValue={task.description}
+              />
             </div>
           </div>
 
@@ -86,7 +102,8 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
               <Select
                 isMulti
                 name="colors"
-                options={other_tasks}
+                options={taskOptions}
+                // value={selectedTasksFrom} // TODO
                 className="basic-multi-select"
                 classNamePrefix="select"
               />
@@ -99,7 +116,8 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
               <Select
                 isMulti
                 name="colors"
-                options={other_tasks}
+                options={taskOptions}
+                // value={selectedTasksTo} // TODO
                 className="basic-multi-select"
                 classNamePrefix="select"
               />
@@ -112,7 +130,7 @@ export default function TaskDetails({ onClose }: TaskPopupProps) {
           </div>
 
           
-          <CloseIcon className={styles.closeButton} onClick={onClose}></CloseIcon>
+          <CloseIcon className={styles.closeButton} onClick={handleClose}></CloseIcon>
         </div>
       </div>
     </div>
