@@ -7,11 +7,10 @@ import { useXarrow } from 'react-xarrows';
 
 interface Props {
   task: Task;
-  isAddArrowMode: boolean;
-  handleDivClicks: (id: string) => void;
-}
+  handleTaskClick: (id: number) => void;
+};
 
-export default function Task({ task, isAddArrowMode, handleDivClicks }: Props) {
+export default function Task({ task, handleTaskClick }: Props) {
   const target_ref = useRef(null);
   const [task_state, setTaskState] = useState<Task>(task);
   const updateXarrow = useXarrow();
@@ -63,14 +62,6 @@ export default function Task({ task, isAddArrowMode, handleDivClicks }: Props) {
     setShowPopup(!showPopup);
   };
 
-  const handleClick = (id: string) => {
-    if(isAddArrowMode) {
-      handleDivClicks(id);
-    } else {
-      handleTogglePopup();
-    }
-  };
-
   return (
     <span className="absolute left-0 top-0 task-container pointer-events-none">
       <div id={task.id.toString()}
@@ -82,10 +73,10 @@ export default function Task({ task, isAddArrowMode, handleDivClicks }: Props) {
           width: `${task_state.width}px`,
           height: `${task_state.height}px`,
           background: task_state.color,
-          cursor: isAddArrowMode ? 'grab' : 'default'
+          // cursor: isAddArrowMode ? 'grab' : 'default' // TODO
         }}
         ref={target_ref}
-        onClick={() => handleClick(task.id.toString())}
+        onClick={() => handleTaskClick(task.id)}
       >
         <p>{task_state.title}</p>
       </div>
