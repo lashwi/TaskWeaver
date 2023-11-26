@@ -6,7 +6,7 @@ import TaskDetails from '@/components/TaskDetails';
 
 interface Props {
   task: Task;
-  onTaskClick: () => void; // New prop to handle task click
+  onTaskClick: (id : number) => void; // New prop to handle task click
 }
 
 export default function Task({ task, onTaskClick }: Props) {
@@ -61,7 +61,7 @@ export default function Task({ task, onTaskClick }: Props) {
 
   // Handle task click to open the ResizablePane
   const handleClick = () => {
-    onTaskClick();
+    onTaskClick(task_state.id-1);
   };
 
   return (

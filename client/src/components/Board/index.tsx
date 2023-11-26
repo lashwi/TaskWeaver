@@ -82,8 +82,10 @@ export default function Board() {
   };
 
   const [ispaneOpen, setPaneOpen] = useState(false);
+  const [currentTask, setCurrentTask] = useState(-1);
 
-  const openPane = () => {
+  const openPane = (id : number) => {
+    setCurrentTask(id);
     if(ispaneOpen==false){
       setPaneOpen(!ispaneOpen);
     }
@@ -107,7 +109,7 @@ export default function Board() {
           />
       ))}
       </div>
-      {ispaneOpen && <ResizablePane isOpen={true} onClose={closePane} />}
+      {ispaneOpen && <ResizablePane isOpen={true} onClose={closePane} task={tasks[currentTask]}/>}
     </div>
     
   );

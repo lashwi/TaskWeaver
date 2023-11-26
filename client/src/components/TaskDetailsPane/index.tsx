@@ -10,11 +10,13 @@ import DependencyView from '@/components/TaskDetails/DependencyView';
 interface ResizablePaneProps {
   isOpen: boolean;
   onClose: () => void;
+  task: Task;
+
 }
 
-const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose }) => {
-  const [width, setWidth] = useState<number>(300); // Initial width of the pane
-  const [height, setHeight] = useState<number>(600); // Initial height of the pane
+const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose, task }) => {
+  const [width, setWidth] = useState<number>(320); // Initial width of the pane
+  const [height, setHeight] = useState<number>(630); // Initial height of the pane
   const [title, setTitle] = useState<string>('');
   const [assignees, setAssignees] = useState<string[]>([]);
   const [description, setDescription] = useState<string>('');
@@ -49,6 +51,15 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose }) => {
     {value: '2', label: 'Build door'}
   ];
 
+  const personas = [
+    {value: '1', label: 'Alice'},
+    {value: '2', label: 'Bob'}
+  ];
+
+  const handleDescriptionChange = (des: string) => {
+    setDescription(des);
+  }
+
   // State to control whether the dependency graph popup is visible
   const [showDependencyGraph, setShowDependencyGraph] = useState(false);
 
@@ -65,35 +76,55 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose }) => {
     // Implement logic to add assignees to the state
   };
 
+  const [task_state, setTaskState] = useState<Task>(task);
+
   return (
     <Draggable handle=".pane-header" bounds="parent">
         <div
             className={`resizable-pane ${isOpen ? 'open' : ''}`}
             style={{ width: `${width}px`, height: `${height}px` }}
         >
+
         <div className="pane-header">
           <h2></h2>
           <CloseIcon className="closeButton2" onClick={onClose}></CloseIcon>
         </div>
+
         <div className="assignee-section">
-          <div className="title">Title</div>
-          <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <div className="title">Title: </div>
+          <input type="text" placeholder="Title" defaultValue={task_state.title} onChange={(e) => setTitle(e.target.value)} />
         </div>
-        <div style={{display:'flex', alignItems:'center'}}>
+
+        {/* <div style={{display:'flex', alignItems:'center'}}>
           <div className="title">Add Assignee</div>
           <button onClick={handleAddAssignee}> +</button>
-          {/* Display assignees */}
+        </div> */}
+        <div className="inputGroup" style={{top: '15px'}}>
+            <div style={{ display: 'flex', alignItems: 'center',top: '15px' }}>
+                <div style={{ marginRight: "6px" }}>Add Assignee:</div>
+                <div className="addButton">+</div>
+            </div>
+            <Select
+                isMulti
+                name="colors"
+                options={personas}
+                className="basic-multi-select"
+                classNamePrefix="select"
+            />
         </div>
+
+
         <div className="description-section">
             Description:
           <textarea
             placeholder="Task Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            // value={description}
+            defaultValue={task_state.description}
+            onChange={(e) =>handleDescriptionChange(e.target.value)}
           />
         </div>
         <div className='flex flex-row w-full mb-4'>
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='grid grid-cols-2 gap-2 border w-full'>
                 <Dropdown 
                    options={['Status','Option2','Option3']}
                    onChange={handleDropdownChange}
