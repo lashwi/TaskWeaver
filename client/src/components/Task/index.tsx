@@ -3,19 +3,23 @@ import { useRef, useState } from 'react';
 import Moveable from 'react-moveable';
 import './styles.css';
 import TaskDetails from '@/components/TaskDetails';
+import { useXarrow } from 'react-xarrows';
 
 interface Props {
   task: Task;
-}
+  handleTaskClick: (id: number) => void;
+};
 
-export default function Task({ task }: Props) {
+export default function Task({ task, handleTaskClick }: Props) {
   const target_ref = useRef(null);
   const [task_state, setTaskState] = useState<Task>(task);
+  const updateXarrow = useXarrow();
   // Event handlers
   const handleDrag = (e: any) => {
     const { target, left, top } = e;
     target.style.left = `${left}px`;
     target.style.top = `${top}px`;
+    updateXarrow;
   }
   const handleDragEnd = (e: any) => {
     const { left, top } = e;
@@ -60,7 +64,7 @@ export default function Task({ task }: Props) {
 
   return (
     <span className="absolute left-0 top-0 task-container pointer-events-none">
-      <div
+      <div id={task.id.toString()}
         className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
         style={{
           position: 'relative',
@@ -69,9 +73,10 @@ export default function Task({ task }: Props) {
           width: `${task_state.width}px`,
           height: `${task_state.height}px`,
           background: task_state.color,
+          // cursor: isAddArrowMode ? 'grab' : 'default' // TODO
         }}
         ref={target_ref}
-        onClick={handleTogglePopup}
+        onClick={() => handleTaskClick(task.id)}
       >
         <p>{task_state.title}</p>
       </div>

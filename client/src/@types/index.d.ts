@@ -3,7 +3,6 @@ interface Board {
   owner: User;
   tasks: Task[];
 }
-
 interface Task {
   id: number;
   title: string;
@@ -21,14 +20,12 @@ interface Task {
   arrowsOut?: Arrow[];
   arrowsIn?: Arrow[];
 }
-
 interface Arrow {
   id: number;
-  from: Task;
-  to: Task;
+  from: number;
+  to: number;
   color: string;
 }
-
 interface User {
   name: string;
   email: string;
