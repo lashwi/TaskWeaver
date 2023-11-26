@@ -146,7 +146,7 @@ export default function Board() {
             _selected_task: selected_task
           });
         }
-        openPane(id);
+        openPane(id-1);
         break;
       case Tool.Move:
         break;
