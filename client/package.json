@@ -21,7 +21,7 @@
     "react-draggable": "^4.4.6",
     "react-moveable": "^0.55.0",
     "react-select": "^5.8.0",
-    "rsuite": "^5.44.0"
+    "react-xarrows": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",

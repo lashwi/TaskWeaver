@@ -1,23 +1,25 @@
 "use client";
-import { useRef, useState } from 'react';
 import Moveable from 'react-moveable';
+import { useRef, useState } from 'react';
+import { useXarrow } from 'react-xarrows';
 import './styles.css';
-import TaskDetails from '@/components/TaskDetails';
 
 interface Props {
   task: Task;
-  onTaskClick: (id : number) => void; // New prop to handle task click
-}
+  handleTaskClick: (id: number) => void;
+};
 
-export default function Task({ task, onTaskClick }: Props) {
+export default function Task({ task, handleTaskClick }: Props) {
   const target_ref = useRef(null);
   const [task_state, setTaskState] = useState<Task>(task);
+  const updateXarrow = useXarrow();
   // Event handlers
   const handleDrag = (e: any) => {
     const { target, left, top } = e;
     target.style.left = `${left}px`;
     target.style.top = `${top}px`;
-  }
+    updateXarrow;
+  };
   const handleDragEnd = (e: any) => {
     const { left, top } = e;
     setTaskState({
@@ -25,7 +27,7 @@ export default function Task({ task, onTaskClick }: Props) {
       posX: left,
       posY: top,
     });
-  }
+  };
   const handleResizeStart = (e: any) => {
     e.setMin([50, 50]);
   };
@@ -41,7 +43,7 @@ export default function Task({ task, onTaskClick }: Props) {
         target.style.top = `${drag.top}px`;
       }
     }
-  }
+  };
   const handleResizeEnd = (e: any) => {
     const { width, height } = e;
     setTaskState({
@@ -49,14 +51,6 @@ export default function Task({ task, onTaskClick }: Props) {
       width: width,
       height: height
     });
-  }
-
-  // State to control whether the popup is visible
-  const [showPopup, setShowPopup] = useState(false);
-
-  // Function to toggle the popup visibility
-  const handleTogglePopup = () => {
-    setShowPopup(!showPopup);
   };
 
   // Handle task click to open the ResizablePane
@@ -67,6 +61,7 @@ export default function Task({ task, onTaskClick }: Props) {
   return (
     <span className="absolute left-0 top-0 task-container pointer-events-none">
       <div
+        id={task.id.toString()} // TODO: Add prefix
         className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
         style={{
           position: 'relative',
@@ -75,10 +70,10 @@ export default function Task({ task, onTaskClick }: Props) {
           width: `${task_state.width}px`,
           height: `${task_state.height}px`,
           background: task_state.color,
+          // cursor: isAddArrowMode ? 'grab' : 'default' // TODO
         }}
         ref={target_ref}
-        // onClick={handleTogglePopup}
-        onClick={handleClick}
+        onClick={() => handleTaskClick(task.id)}
       >
         <p>{task_state.title}</p>
       </div>
@@ -103,7 +98,6 @@ export default function Task({ task, onTaskClick }: Props) {
         onResize={handleResize}
         onResizeEnd={handleResizeEnd}
       />
-      {/* {showPopup && <TaskDetails onClose={handleTogglePopup} />} */}
     </span>
   );
 }
