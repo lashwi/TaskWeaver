@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Draggable from 'react-draggable';
 import './ResizablePane.css';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,7 +14,7 @@ interface ResizablePaneProps {
 
 }
 
-const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose, task }) => {
+export default function ResizablePane({ isOpen, onClose, task }: ResizablePaneProps) {
   const [width, setWidth] = useState<number>(320); // Initial width of the pane
   const [height, setHeight] = useState<number>(630); // Initial height of the pane
   const [title, setTitle] = useState<string>('');
@@ -178,8 +178,5 @@ const ResizablePane: React.FC<ResizablePaneProps> = ({ isOpen, onClose, task }) 
       </Draggable>
       {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
     </div>
-    
   );
 };
-
-export default ResizablePane;
