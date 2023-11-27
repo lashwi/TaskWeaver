@@ -93,7 +93,7 @@ export default function TaskDetailsPane(props: Props) {
   };
 
   return (
-    <span className="pointer-events-auto">
+    <span key={task.id} className="pointer-events-auto">
       <div
         className="panel-surface-050 p-1"
         style={{
@@ -116,7 +116,7 @@ export default function TaskDetailsPane(props: Props) {
           <input
             type="text"
             placeholder="Untitled task"
-            value={task.title}
+            defaultValue={task.title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -137,7 +137,7 @@ export default function TaskDetailsPane(props: Props) {
           <span>Description:</span>
           <textarea
             placeholder="Enter task description"
-            value={task.description ?? ''}
+            defaultValue={task.description ?? ''}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>

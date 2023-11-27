@@ -1,6 +1,6 @@
 "use client";
 import Moveable from 'react-moveable';
-import { useRef, useState } from 'react';
+import { useDeferredValue, useRef } from 'react';
 import { useXarrow } from 'react-xarrows';
 import './styles.css';
 
@@ -71,7 +71,7 @@ export default function Task(props: Props) {
         ref={target_ref}
         onClick={() => handleTaskClick(task.id)}
       >
-        <p>{task.title}</p>
+        <p>{useDeferredValue(task.title)}</p>
       </div>
       <Moveable
         className="pointer-events-auto"
