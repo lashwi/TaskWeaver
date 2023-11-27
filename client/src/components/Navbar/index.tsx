@@ -7,7 +7,7 @@ import {
 
 export default function Navbar() {
   return (
-    <nav className="flex flex-row absolute top-4 left-4 right-4 z-20 gap-2">
+    <nav className="flex flex-row gap-2 pointer-events-none [&>*]:pointer-events-auto">
       <div className="flex bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-xl items-center p-1">
         <button className="p-1 rounded-lg hover:bg-surface-100">
           <Folder24Regular />
