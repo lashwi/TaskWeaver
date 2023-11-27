@@ -38,11 +38,11 @@
     margin-right: 5px;
   }
   
-  input{
+  /* input{
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+  } */
 
   .description-section{
     width: 100%;
@@ -50,14 +50,14 @@
   
     margin-top: 0px;
   }
-  textarea{
+  /* textarea{
     border: 1px solid #ccc;
     width: 100%;
     border-radius: 4px;
     padding: 5px;
     height: 140px;
     margin-bottom: 10px;
-  }
+  } */
 
   .closeButton2 {
     display: flex;

@@ -95,9 +95,9 @@ export default function TaskDetailsPane(props: Props) {
   return (
     <span className="pointer-events-auto">
       <div
-        className="resizable-pane open"
+        className="panel-surface-050 p-1"
         style={{
-          position: 'relative',
+          position: "relative",
           left: `${pane_state.posX}px`,
           top: `${pane_state.posY}px`,
           width: `${pane_state.width}px`,
@@ -105,9 +105,7 @@ export default function TaskDetailsPane(props: Props) {
         }}
         ref={target_ref}
       >
-        <div className="pane-header">
-          <h2></h2>
-          {/* <CloseIcon className="closeButton2" onClick={onClose}></CloseIcon> */}
+        <div className="flex items-center justify-end">
           <button className="flex flex-row p-1 rounded-lg hover:bg-surface-100">
             <Dismiss24Filled onClick={handleClose} />
           </button>
