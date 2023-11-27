@@ -124,7 +124,7 @@ export default function TaskDetails(props: Props) {
             </div>
 
             <div >
-              // <Button onClick={handleDependencyGraph} className={styles.bottomButton}>View dependency graph</Button>
+              {/* <Button onClick={handleDependencyGraph} className={styles.bottomButton}>View dependency graph</Button> */}
               {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
             </div>
           </div>
