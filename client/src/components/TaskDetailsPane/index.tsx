@@ -116,7 +116,7 @@ export default function TaskDetailsPane(props: Props) {
           <input
             type="text"
             placeholder="Untitled task"
-            defaultValue={task.title}
+            value={task.title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -136,8 +136,8 @@ export default function TaskDetailsPane(props: Props) {
         <div className="description-section">
           <span>Description:</span>
           <textarea
-            placeholder="Task Description"
-            defaultValue={task.description}
+            placeholder="Enter task description"
+            value={task.description ?? ''}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
