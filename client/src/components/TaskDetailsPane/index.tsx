@@ -133,34 +133,53 @@ export default function TaskDetailsPane(props: Props) {
             classNamePrefix="select"
           />
         </div>
-        <div className="description-section">
+        <div className="description-section flex flex-col">
           <span>Description:</span>
           <textarea
+            className='description-input'
             placeholder="Enter task description"
             defaultValue={task.description ?? ''}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div className='flex flex-row w-full mb-4'>
-          <div className='grid grid-cols-2 gap-2 border w-full'>
+        <div className='flex flex-row w-full mb-4 mt-4'>
+          <div className='grid grid-cols-2 gap-2 border w-full bg-gray-200 rounded-20 p-1'>
+            <span className='flex flex-col'>Status
             <Dropdown 
-              options={['Status','Option2','Option3']}
+              options={['Status','To Do','Doing','Done']}
               onChange={handleDropdownChange}
             />
-            <Dropdown 
+            </span>
+            
+            <span className='flex flex-col'> Deadline
+            {/* <Dropdown 
               options={['Deadline','Option2','Option3']}
               onChange={handleDropdownChange}
-            />
+            /> */}
+            <input type="date" id="start" name="trip-start" value="2023-12-01" min="2023-01-01" max="2024-12-31" className='h-9 rounded-lg p-2'/>
+
+            </span>
+            
+            <span className='flex flex-col'> Priority
             <Dropdown 
-              options={['Priority','Option2','Option3']}
+              options={['Priority','Critical','High','Medium','Low']}
               onChange={handleDropdownChange}
             />
-            <Dropdown 
-              options={['Time Needed','Option2','Option3']}
-              onChange={handleDropdownChange}
+            </span>
+            
+            <span className='flex flex-col'> Time Needed
+            <input
+              className='rounded-lg p-2'
+              type="text"
+              placeholder="Time Needed"
+              defaultValue={"3days"}
+              // onChange={(e) => setTitle(e.target.value)}
             />
+            </span>
+            
           </div>
         </div>
+
         <div className="inputGroup">
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ marginRight: "6px" }}>This task depends on:</div>
