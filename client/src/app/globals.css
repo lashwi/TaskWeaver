@@ -19,6 +19,10 @@
 
 }
 
+.panel-surface-050 {
+  @apply bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-xl shadow-md;
+}
+
 .task-bubble {
   background-color: #86FAB9;
   padding: 10px;

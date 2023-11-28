@@ -1,10 +1,12 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Xarrow, { Xwrapper } from 'react-xarrows';
+import Navbar from '@/components/Navbar';
 import Task from '@/components/Task';
-import TaskDetails from '@/components/TaskDetails';
+import TaskDetailsPane from '@/components/TaskDetailsPane';
 import Toolbar from '@/components/Toolbar';
 import './styles.css';
+
 
 interface BoardViewState {
   offsetX: number;
@@ -191,6 +193,18 @@ export default function Board() {
     setTaskList(newTasks);
   };
 
+  const updateTask = (task: Task) => {
+    const taskIdx = tasks.findIndex((t) => t.id == task.id);
+    if (taskIdx == -1) {
+      console.error(`Task ${task.id} not found`);
+      return;
+    }
+    console.log(`Updating task ${task.id}`);
+    const newTasks = tasks.slice();
+    newTasks[taskIdx] = task;
+    setTaskList(newTasks);
+  };
+
   const addArrow = (firstTaskId: number, secondTaskId: number) => {
     const newArrow: Arrow = {
       id: arrows.length + 1, // TODO: Better way of assigning arrow IDs
@@ -203,21 +217,19 @@ export default function Board() {
 
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
-      <Toolbar
-        selectedTool={selectedTool}
-        setSelectedTool={handleSetTool}
-      />
-      <Xwrapper>
-        <div
-          style={{ zoom: board_view_state.zoom }}
-          // className="board-bg-grid bg-white absolute left-1/2 top-1/2"
-          className="board-bg-grid bg-white absolute h-full w-full">
+      <div
+        style={{ zoom: board_view_state.zoom }}
+        // className="z-0 board-bg-grid bg-white absolute left-1/2 top-1/2"
+        className="z-0 board-bg-grid bg-white absolute h-full w-full"
+      >
+        <Xwrapper>
           {tasks.map((task, idx) => (
             // TODO: Conditional styles based on selected tool
             <Task
               key={idx}
               task={task}
               handleTaskClick={handleTaskClick}
+              handleTaskUpdate={updateTask}
             />
           ))}
           {arrows.map((arrow, idx) => (
@@ -227,16 +239,30 @@ export default function Board() {
               end={arrow.to.toString()}
             />
           ))}
+        </Xwrapper>
+      </div>
+      <div className="z-10 absolute top-4 left-4 right-4 flex flex-col pointer-events-none">
+        <Navbar />
+        <div className="relative">
+          <div className="absolute flex grow-0 top-64">
+            <Toolbar
+              selectedTool={selectedTool}
+              setSelectedTool={handleSetTool}
+            />
+          </div>
+          <div className="absolute top-8 right-0">
+            {pointerToolState._selected_task ? (
+              <TaskDetailsPane
+                task={pointerToolState._selected_task}
+                otherTasks={tasks.filter((task) => task.id != pointerToolState._selected_task!.id)}
+                arrows={arrows}
+                handleClose={() => setPointerToolState({...pointerToolState, _selected_task: null })}
+                handleTaskUpdate={updateTask}
+              />
+            ) : null}
+          </div>
         </div>
-      </Xwrapper>
-      {pointerToolState._selected_task ? (
-        <TaskDetails
-          task={pointerToolState._selected_task}
-          otherTasks={tasks.filter((task) => task.id != pointerToolState._selected_task!.id)}
-          arrows={arrows}
-          handleClose={() => setPointerToolState({...pointerToolState, _selected_task: null })}
-        />
-      ) : null}
+      </div>
     </div>
   );
 };

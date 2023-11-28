@@ -1,7 +1,6 @@
 "use client";
 import { useState } from 'react';
 import Board from '@/components/Board';
-import Navbar from '@/components/Navbar';
 
 export default function Home() {
   // State to control whether the popup is visible
@@ -15,8 +14,6 @@ export default function Home() {
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
       <Board />
-      <Navbar />
-       
     </div>
   );
 }
