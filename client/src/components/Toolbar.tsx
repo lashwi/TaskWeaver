@@ -63,6 +63,7 @@ export default function Toolbar({ selectedTool, setSelectedTool }: Props) {
       </div>
       <Tooltip
         id="tooltip-toolbar"
+        className="!rounded-xl"
         opacity={1}
         place="right"
       />
