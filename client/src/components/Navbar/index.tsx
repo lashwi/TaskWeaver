@@ -4,12 +4,17 @@ import {
   Folder24Regular,
   Person24Filled
 } from '@fluentui/react-icons';
+import { Tooltip } from 'react-tooltip';
 
 export default function Navbar() {
   return (
     <nav className="flex flex-row gap-2 pointer-events-none [&>*]:pointer-events-auto">
       <div className="flex panel-surface-050 items-center p-1">
-        <button className="p-1 rounded-lg hover:bg-surface-100">
+        <button
+          className="p-1 rounded-lg hover:bg-surface-100"
+          data-tooltip-id="tooltip-navbar"
+          data-tooltip-content="Boards"
+        >
           <Folder24Regular />
         </button>
       </div>
@@ -22,13 +27,21 @@ export default function Navbar() {
       </div>
       <div className="flex panel-surface-050 items-center">
         <div className="p-1">
-          <button className="flex flex-row p-1 rounded-lg hover:bg-surface-100">
+          <button
+            className="flex flex-row p-1 rounded-lg hover:bg-surface-100"
+            data-tooltip-id="tooltip-navbar"
+            data-tooltip-content="Undo"
+          >
             <ArrowUndo24Filled />
           </button>
         </div>
         <span className="h-full border-l-2 border-surface-100" />
         <div className="p-1">
-          <button className="flex flex-row p-1 rounded-lg hover:bg-surface-100">
+          <button
+            className="flex flex-row p-1 rounded-lg hover:bg-surface-100"
+            data-tooltip-id="tooltip-navbar"
+            data-tooltip-content="Redo"
+          >
             <ArrowRedo24Filled />
           </button>
         </div>
@@ -43,6 +56,12 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+      <Tooltip
+        id="tooltip-navbar"
+        className="!rounded-xl"
+        opacity={1}
+        place="bottom"
+      />
     </nav>
   );
 };
