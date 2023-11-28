@@ -1,60 +1,58 @@
 "use client";
-import { IconButton } from 'rsuite';
 import {
+  ArrowFlowUpRight24Filled,
   ArrowFlowUpRight24Regular,
+  ArrowMove24Filled,
   ArrowMove24Regular,
   CalendarAdd24Regular,
-  Cursor24Regular
-} from "@fluentui/react-icons";
+  Cursor24Regular,
+  Cursor24Filled,
+  SlideAdd24Regular,
+  SlideAdd24Filled
+} from '@fluentui/react-icons';
+import { Tool } from '@/components/Board';
 import { Tooltip } from 'react-tooltip';
 
-interface toolbarProps {
-  addTask: () => void;
-}
+interface Props {
+  selectedTool: Tool;
+  setSelectedTool: (arg: Tool) => void;
+};
 
-export default function Toolbar({ addTask = () => {}}: toolbarProps) {
-  const changeCursor = (cursorType: string) => {
-    document.body.style.cursor = cursorType;
-  };
+export default function Toolbar({ selectedTool, setSelectedTool }: Props) {
+  const isPointer = selectedTool === Tool.Pointer;
+  const isMove = selectedTool === Tool.Move;
+  const isTask = selectedTool === Tool.Task;
+  const isArrow = selectedTool === Tool.Arrow;
   return (
-    <div
-      className="bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-2xl p-2 flex flex-col fixed left-4 top-64 z-30"
-    >
-      <div className="grid grid-cols-1 gap-4">
-        <a data-tooltip-id='select' data-tooltip-content='Select' data-tooltip-place='right'>
-          <IconButton icon={<Cursor24Regular />} 
-            appearance='primary' 
-            color='cyan' 
-            onClick={() => changeCursor('default')}
-          />
-        </a>
-        <Tooltip id='select'/>
-        <a data-tooltip-id='move' data-tooltip-content='Move' data-tooltip-place='right'>
-          <IconButton icon={<ArrowMove24Regular />} 
-            appearance='primary' 
-            color='blue' 
-            size='lg' 
-            onClick={() => changeCursor('move')}/>
-        </a>
-        <Tooltip id='move'/>
-        <hr className="border-surface-200" />
-        <a data-tooltip-id='addtask' data-tooltip-content='Add Task' data-tooltip-place='right'>
-          <IconButton icon={<CalendarAdd24Regular />} 
-            appearance='primary'
-            color='blue'
-            size='lg'
-            onClick={() => addTask()}
-          />
-        </a>
-        <Tooltip id='addtask'/>
-        <a data-tooltip-id='addarrow' data-tooltip-content='Add Arrow' data-tooltip-place='right'>
-          <IconButton icon={<ArrowFlowUpRight24Regular />} 
-            appearance='primary'
-            color='blue'
-            size='lg'
-          />
-        </a>
-        <Tooltip id='addarrow'/>
+    <div className="bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-xl flex flex-col fixed left-4 top-64 z-30">
+      <div className="grid grid-cols-1 gap-1 p-1">
+        <button
+          className={`p-1 rounded-lg hover:bg-surface-100 ${isPointer ? 'bg-surface-100' : ''}`}
+          onClick={() => setSelectedTool(Tool.Pointer)}
+        >
+          {isPointer ? <Cursor24Filled /> : <Cursor24Regular />}
+        </button>
+        <button
+          className={`p-1 rounded-lg hover:bg-surface-100 ${isMove ? 'bg-surface-100' : ''}`}
+          onClick={() => setSelectedTool(Tool.Move)}
+        >
+          {isMove ? <ArrowMove24Filled /> : <ArrowMove24Regular />}
+        </button>
+      </div>
+      <span className="border-t-2 border-surface-100" />
+      <div className="grid grid-cols-1 gap-1 p-1">
+        <button
+          className={`p-1 rounded-lg hover:bg-surface-100 ${isTask ? 'bg-surface-100' : ''}`}
+          onClick={() => setSelectedTool(Tool.Task)}
+        >
+          {isTask ? <SlideAdd24Filled /> : <SlideAdd24Regular />}
+        </button>
+        <button
+          className={`p-1 rounded-lg hover:bg-surface-100 ${isArrow ? 'bg-surface-100' : ''}`}
+          onClick={() => setSelectedTool(Tool.Arrow)}
+        >
+          {isArrow ? <ArrowFlowUpRight24Filled /> : <ArrowFlowUpRight24Regular />}
+        </button>
       </div>
     </div>
   );
