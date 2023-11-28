@@ -1,17 +1,18 @@
 "use client";
 import Moveable from 'react-moveable';
-import { useRef, useState } from 'react';
+import { useDeferredValue, useRef } from 'react';
 import { useXarrow } from 'react-xarrows';
 import './styles.css';
 
 interface Props {
   task: Task;
   handleTaskClick: (id: number) => void;
+  handleTaskUpdate: (task: Task) => void;
 };
 
-export default function Task({ task, handleTaskClick }: Props) {
+export default function Task(props: Props) {
+  const { task, handleTaskClick, handleTaskUpdate } = props;
   const target_ref = useRef(null);
-  const [task_state, setTaskState] = useState<Task>(task);
   const updateXarrow = useXarrow();
   // Event handlers
   const handleDrag = (e: any) => {
@@ -22,8 +23,8 @@ export default function Task({ task, handleTaskClick }: Props) {
   };
   const handleDragEnd = (e: any) => {
     const { left, top } = e;
-    setTaskState({
-      ...task_state,
+    handleTaskUpdate({
+      ...task,
       posX: left,
       posY: top,
     });
@@ -46,10 +47,10 @@ export default function Task({ task, handleTaskClick }: Props) {
   };
   const handleResizeEnd = (e: any) => {
     const { width, height } = e;
-    setTaskState({
-      ...task_state,
-      width: width,
-      height: height
+    handleTaskUpdate({
+      ...task,
+      width,
+      height
     });
   };
 
@@ -60,17 +61,17 @@ export default function Task({ task, handleTaskClick }: Props) {
         className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
         style={{
           position: 'relative',
-          left: `${task_state.posX}px`,
-          top: `${task_state.posY}px`,
-          width: `${task_state.width}px`,
-          height: `${task_state.height}px`,
-          background: task_state.color,
+          left: `${task.posX}px`,
+          top: `${task.posY}px`,
+          width: `${task.width}px`,
+          height: `${task.height}px`,
+          background: task.color,
           // cursor: isAddArrowMode ? 'grab' : 'default' // TODO
         }}
         ref={target_ref}
         onClick={() => handleTaskClick(task.id)}
       >
-        <p>{task_state.title}</p>
+        <p>{useDeferredValue(task.title)}</p>
       </div>
       <Moveable
         className="pointer-events-auto"

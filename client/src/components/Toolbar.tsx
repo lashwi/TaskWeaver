@@ -22,7 +22,7 @@ export default function Toolbar({ selectedTool, setSelectedTool }: Props) {
   const isTask = selectedTool === Tool.Task;
   const isArrow = selectedTool === Tool.Arrow;
   return (
-    <div className="bg-surface-050/50 border-2 border-surface-100 rounded-xl backdrop-blur-xl flex flex-col fixed left-4 top-64 z-30">
+    <div className="flex flex-col panel-surface-050 pointer-events-auto">
       <div className="grid grid-cols-1 gap-1 p-1">
         <button
           className={`p-1 rounded-lg hover:bg-surface-100 ${isPointer ? 'bg-surface-100' : ''}`}
