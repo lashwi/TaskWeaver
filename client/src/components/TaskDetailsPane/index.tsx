@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Moveable from 'react-moveable';
 import Select from 'react-select';
 import { Dismiss24Filled } from '@fluentui/react-icons';
@@ -12,6 +12,8 @@ interface Props {
   arrows: Arrow[];
   handleClose: () => void;
   handleTaskUpdate: (task: Task) => void;
+  addArrow: (firstTaskId: number, secondTaskId: number) => void;
+  removeArrow: (firstTaskId: number, secondTaskId: number) => void;
 };
 
 interface PaneState {
@@ -22,7 +24,7 @@ interface PaneState {
 };
 
 export default function TaskDetailsPane(props: Props) {
-  const { task, otherTasks, arrows, handleClose, handleTaskUpdate } = props;
+  const { task, otherTasks, arrows, handleClose, handleTaskUpdate, addArrow, removeArrow } = props;
   const target_ref = useRef(null);
   const [pane_state, setPaneState] = useState<PaneState>({
     posX: 0,
@@ -39,6 +41,24 @@ export default function TaskDetailsPane(props: Props) {
     value: t.id.toString(),
     label: t.title
   }));
+
+  let taskIdsDependingOn = arrows.map((arrow: Arrow) => {
+    if(arrow.from === task.id) return arrow.to;
+  });
+
+  let taskIdsDependentOn = arrows.map((arrow: Arrow) => {
+    if(arrow.to === task.id) return arrow.from;
+  });
+
+  const getTaskValuesFromIds = (taskIds: any) => {
+    return otherTasks.filter(task => taskIds.includes(task.id)).map(t => ({
+      value: t.id.toString(),
+      label: t.title
+    }))
+  };
+
+  let tasksDependingOn = getTaskValuesFromIds(taskIdsDependingOn);
+  let tasksDependentOn = getTaskValuesFromIds(taskIdsDependentOn);
 
   // Task update functions
   const setTitle = (title: string) => {
@@ -91,6 +111,40 @@ export default function TaskDetailsPane(props: Props) {
   const handleAddAssignee = () => {
     // Implement logic to add assignees to the state
   };
+
+  const handleSelectChangeForDependentTasks = (newValues: any) => {
+    const newTaskIdsDependentOn = newValues.map((val: { value: string; }) => parseInt(val.value));
+    if (taskIdsDependentOn.length > newTaskIdsDependentOn.length) {
+      let removedTaskId = taskIdsDependentOn.filter(id => !newTaskIdsDependentOn.includes(id));
+      if(removedTaskId[0] != undefined) {
+        removeArrow(removedTaskId[0], task.id);
+        taskIdsDependentOn = newTaskIdsDependentOn;
+      }
+    } else {
+      let addedTaskId = newTaskIdsDependentOn.filter((id: number | undefined) => !taskIdsDependentOn.includes(id));
+      if(addedTaskId[0] != undefined) {
+        addArrow(addedTaskId[0], task.id);
+        taskIdsDependentOn = newTaskIdsDependentOn;
+      }
+    }
+  }
+
+  const handleSelectChangeForDependingTasks = (newValues: any) => {
+    const newTaskIdsDependingOn = newValues.map((val: { value: string; }) => parseInt(val.value));
+    if (taskIdsDependingOn.length > newTaskIdsDependingOn.length) {
+      let removedTaskId = taskIdsDependingOn.filter(id => !newTaskIdsDependingOn.includes(id));
+      if(removedTaskId[0] != undefined) {
+        removeArrow(task.id, removedTaskId[0]);
+        taskIdsDependingOn = newTaskIdsDependingOn;
+      }
+    } else {
+      let addedTaskId = newTaskIdsDependingOn.filter((id: number | undefined) => !taskIdsDependingOn.includes(id));
+      if(addedTaskId[0] != undefined) {
+        addArrow(task.id, addedTaskId[0]);
+        taskIdsDependingOn = newTaskIdsDependingOn;
+      }
+    }
+  }
 
   return (
     <span key={task.id} className="pointer-events-auto">
@@ -170,6 +224,8 @@ export default function TaskDetailsPane(props: Props) {
             isMulti
             name="colors"
             options={taskOptions}
+            defaultValue={tasksDependentOn}
+            onChange={handleSelectChangeForDependentTasks}
             className="basic-multi-select"
             classNamePrefix="select"
           />
@@ -182,6 +238,8 @@ export default function TaskDetailsPane(props: Props) {
           <Select
             isMulti
             name="colors"
+            defaultValue={tasksDependingOn}
+            onChange={handleSelectChangeForDependingTasks}
             options={taskOptions}
             className="basic-multi-select"
             classNamePrefix="select"
@@ -203,7 +261,7 @@ export default function TaskDetailsPane(props: Props) {
         throttleDrag={1}
         throttleResize={1}
       /> */}
-      {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
+      {showDependencyGraph && <DependencyView task={task} arrows={arrows} otherTasks={otherTasks} onClose={handleDependencyGraph} />}
     </span>
   );
 };
