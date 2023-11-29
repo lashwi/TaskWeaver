@@ -42,14 +42,18 @@ export default function TaskDetailsPane(props: Props) {
     label: t.title
   }));
 
-  let taskIdsDependingOn = arrows.map((arrow: Arrow) => {
-    if(arrow.from === task.id) return arrow.to;
+  let taskIdsDependingOn: any[] = [];
+  arrows.map((arrow: Arrow) => {
+    if(arrow.from === task.id) taskIdsDependingOn = [...taskIdsDependingOn, arrow.to];
   });
 
-  let taskIdsDependentOn = arrows.map((arrow: Arrow) => {
-    if(arrow.to === task.id) return arrow.from;
+  let taskIdsDependentOn: any[] = [];
+   arrows.map((arrow: Arrow) => {
+    if(arrow.to === task.id) taskIdsDependentOn = [...taskIdsDependentOn, arrow.from];
   });
 
+  console.log('r', taskIdsDependentOn);
+  console.log('e', taskIdsDependingOn);
   const getTaskValuesFromIds = (taskIds: any) => {
     return otherTasks.filter(task => taskIds.includes(task.id)).map(t => ({
       value: t.id.toString(),
@@ -114,6 +118,8 @@ export default function TaskDetailsPane(props: Props) {
 
   const handleSelectChangeForDependentTasks = (newValues: any) => {
     const newTaskIdsDependentOn = newValues.map((val: { value: string; }) => parseInt(val.value));
+    console.log('l',newTaskIdsDependentOn);
+    console.log('m', taskIdsDependentOn);
     if (taskIdsDependentOn.length > newTaskIdsDependentOn.length) {
       let removedTaskId = taskIdsDependentOn.filter(id => !newTaskIdsDependentOn.includes(id));
       if(removedTaskId[0] != undefined) {
