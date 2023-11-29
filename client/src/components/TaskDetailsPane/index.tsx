@@ -52,8 +52,6 @@ export default function TaskDetailsPane(props: Props) {
     if(arrow.to === task.id) taskIdsDependentOn = [...taskIdsDependentOn, arrow.from];
   });
 
-  console.log('r', taskIdsDependentOn);
-  console.log('e', taskIdsDependingOn);
   const getTaskValuesFromIds = (taskIds: any) => {
     return otherTasks.filter(task => taskIds.includes(task.id)).map(t => ({
       value: t.id.toString(),
@@ -118,8 +116,6 @@ export default function TaskDetailsPane(props: Props) {
 
   const handleSelectChangeForDependentTasks = (newValues: any) => {
     const newTaskIdsDependentOn = newValues.map((val: { value: string; }) => parseInt(val.value));
-    console.log('l',newTaskIdsDependentOn);
-    console.log('m', taskIdsDependentOn);
     if (taskIdsDependentOn.length > newTaskIdsDependentOn.length) {
       let removedTaskId = taskIdsDependentOn.filter(id => !newTaskIdsDependentOn.includes(id));
       if(removedTaskId[0] != undefined) {
