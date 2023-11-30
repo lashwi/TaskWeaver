@@ -77,7 +77,8 @@ export default function Board() {
       height: 100,
       posX: 300,
       posY: 100,
-      color: "#f7d9c4"
+      color: "#f7d9c4",
+      description: 'Description of finding cool tree',
     },
     {
       id: 5,
@@ -86,7 +87,8 @@ export default function Board() {
       height: 100,
       posX: 800,
       posY: 250,
-      color: "#c9e4de"
+      color: "#c9e4de",
+      description: 'Description of assembling treehouse',
     },
   ]);
 

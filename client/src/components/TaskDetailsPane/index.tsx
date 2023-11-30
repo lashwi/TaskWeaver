@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, ChangeEvent } from 'react';
 import Moveable from 'react-moveable';
 import Select from 'react-select';
 import { Dismiss24Filled } from '@fluentui/react-icons';
@@ -84,8 +84,37 @@ export default function TaskDetailsPane(props: Props) {
     setShowDependencyGraph(!showDependencyGraph);
   };
 
-  const handleDropdownChange = (selectedValue: string) => {
+  const handleDropdownChange_status = (selectedValue: string) => {
+    console.log(selectedValue);
+    handleTaskUpdate({
+      ...task,
+      status:selectedValue
+    });
+  };
 
+  const handleDropdownChange_priority = (selectedValue: string) => {
+    console.log(selectedValue);
+    handleTaskUpdate({
+      ...task,
+      priority:selectedValue
+    });
+  };
+
+  const setTimeNeeded = (timeNeeded: string) => {
+    handleTaskUpdate({
+      ...task,
+      timeNeeded
+    });
+  };
+
+  const setDDL = ( e : ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    task.deadline = newValue;
+    console.log(newValue);
+    handleTaskUpdate({
+      ...task,
+      deadline: newValue
+    });
   }
 
   const handleAddAssignee = () => {
@@ -147,7 +176,9 @@ export default function TaskDetailsPane(props: Props) {
             <span className='flex flex-col'>Status
             <Dropdown 
               options={['Status','To Do','Doing','Done']}
-              onChange={handleDropdownChange}
+              // onChange={handleDropdownChange}
+              onChange={(e) => handleDropdownChange_status(e)}
+              curValue={task.status || ""}
             />
             </span>
             
@@ -156,14 +187,15 @@ export default function TaskDetailsPane(props: Props) {
               options={['Deadline','Option2','Option3']}
               onChange={handleDropdownChange}
             /> */}
-            <input type="date" id="start" name="trip-start" value="2023-12-01" min="2023-01-01" max="2024-12-31" className='h-9 rounded-lg p-2'/>
+            <input type="date" id="start" name="trip-start" value= {task.deadline || "2023-12-30"} min="2023-01-01" max="2024-12-31" className='h-9 rounded-lg p-2' onChange={(e)=> setDDL(e)}/>
 
             </span>
             
             <span className='flex flex-col'> Priority
             <Dropdown 
               options={['Priority','Critical','High','Medium','Low']}
-              onChange={handleDropdownChange}
+              onChange={(e) => handleDropdownChange_priority(e)}
+              curValue={task.priority || ""}
             />
             </span>
             
@@ -172,8 +204,8 @@ export default function TaskDetailsPane(props: Props) {
               className='rounded-lg p-2'
               type="text"
               placeholder="Time Needed"
-              defaultValue={"3days"}
-              // onChange={(e) => setTitle(e.target.value)}
+              defaultValue={task.timeNeeded ?? ""}
+              onChange={(e) => setTimeNeeded(e.target.value)}
             />
             </span>
             

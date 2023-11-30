@@ -5,12 +5,13 @@ import React, { useState } from 'react';
 interface DropdownProps {
   options: string[];
   onChange: (value: string) => void;
+  curValue: string;
 }
 
 // The Dropdown component
-const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
+const Dropdown: React.FC<DropdownProps> = ({ options, onChange, curValue }) => {
   // State for the selected value
-  const [selectedValue, setSelectedValue] = useState(options[0] || '');
+  const [selectedValue, setSelectedValue] = useState(curValue || options[0]);
 
   // Function to call when the value changes
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
