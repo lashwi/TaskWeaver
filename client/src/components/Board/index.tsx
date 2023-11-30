@@ -215,6 +215,11 @@ export default function Board() {
     setarrows([...arrows, newArrow]);
   };
 
+  const removeArrow = (firstTaskId: number, secondTaskId: number) => {
+    const updatedArrows = arrows.filter(arrow => !(arrow.from == firstTaskId && arrow.to == secondTaskId));
+    setarrows(updatedArrows);
+  };
+
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
       <div
@@ -258,6 +263,8 @@ export default function Board() {
                 arrows={arrows}
                 handleClose={() => setPointerToolState({...pointerToolState, _selected_task: null })}
                 handleTaskUpdate={updateTask}
+                addArrow={addArrow}
+                removeArrow={removeArrow}
               />
             ) : null}
           </div>
