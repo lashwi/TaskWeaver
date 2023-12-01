@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import styles from './TaskPopup.module.css';
 import Dropdown from '@/components/Dropdown';
-import { Button } from '@mui/joy';
-import CloseIcon from '@mui/icons-material/Close';
+// import { Button } from '@mui/joy';
+// import CloseIcon from '@mui/icons-material/Close';
 import Select from 'react-select';
 
 import DependencyView from './DependencyView';
@@ -78,18 +78,22 @@ export default function TaskDetails(props: Props) {
                 <Dropdown
                   options={['Status', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Deadline', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Priority', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Time Needed', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
               </div>
             </div>
@@ -123,14 +127,14 @@ export default function TaskDetails(props: Props) {
               />
             </div>
 
-            <div >
-              <Button onClick={handleDependencyGraph} className={styles.bottomButton}>View dependency graph</Button>
-              {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />}
-            </div>
+            {/* <div > */}
+              {/* <Button onClick={handleDependencyGraph} className={styles.bottomButton}>View dependency graph</Button> */}
+              {/* {showDependencyGraph && <DependencyView onClose={handleDependencyGraph} />} */}
+            {/* </div> */}
           </div>
 
           
-          <CloseIcon className={styles.closeButton} onClick={handleClose}></CloseIcon>
+          {/* <CloseIcon className={styles.closeButton} onClick={handleClose}></CloseIcon> */}
         </div>
       </div>
     </div>

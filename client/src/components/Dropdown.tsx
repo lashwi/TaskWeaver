@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
-// import styles from '../styles/TaskPopup.module.css';
+import { useState } from 'react';
 
-// Define the props for the dropdown component
-interface DropdownProps {
+interface Props {
   options: string[];
   onChange: (value: string) => void;
+  curValue: string;
 }
 
-// The Dropdown component
-const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
-  // State for the selected value
-  const [selectedValue, setSelectedValue] = useState(options[0] || '');
+export default function Dropdown({ options, onChange, curValue }: Props) {
+  const [selectedValue, setSelectedValue] = useState(curValue || options[0]);
 
-  // Function to call when the value changes
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
     setSelectedValue(newValue);
@@ -20,7 +16,11 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
   };
 
   return (
-    <select value={selectedValue} onChange={handleSelectChange} className="border-[#463D62] rounded-lg p-2">
+    <select
+      className="border-2 border-surface-150 rounded-md p-1 h-full"
+      value={selectedValue}
+      onChange={handleSelectChange}
+    >
       {options.map((option, index) => (
         <option key={index} value={option}>
           {option}
@@ -29,5 +29,3 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
     </select>
   );
 };
-
-export default Dropdown;
