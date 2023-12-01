@@ -35,69 +35,99 @@ export enum Tool {
 };
 
 export default function Board() {
+  const [board, setBoard] = useState<Board>({
+    id: 1,
+    title: "Dream Treehouse Project",
+    tasks: [
+      {
+        id: 1,
+        title: 'Gather wood',
+        description: 'Example description!',
+        width: 200,
+        height: 100,
+        posX: 200,
+        posY: 350,
+        color: "#f7d9c4"
+      },
+      {
+        id: 2,
+        title: 'Build door',
+        width: 200,
+        height: 100,
+        posX: 500,
+        posY: 300,
+        color: "#faedcb"
+      },
+      {
+        id: 3,
+        title: 'Build walls',
+        width: 200,
+        height: 100,
+        posX: 500,
+        posY: 450,
+        color: "#faedcb"
+      },
+      {
+        id: 4,
+        title: 'Find cool tree',
+        width: 200,
+        height: 100,
+        posX: 300,
+        posY: 100,
+        color: "#f7d9c4"
+      },
+      {
+        id: 5,
+        title: 'Assemble treehouse',
+        width: 200,
+        height: 100,
+        posX: 800,
+        posY: 250,
+        color: "#c9e4de"
+      },
+    ],
+    arrows: [
+      {
+        id: 1,
+        from: 1,
+        to: 2,
+        color: "#0000ff"
+      }
+    ],
+    users: [
+      {
+        name: "Alice"
+      },
+      {
+        name: "Bob"
+      }
+    ]
+  });
+  const setTasks = (tasks: Task[]) => {
+    setBoard({
+      ...board,
+      tasks
+    });
+  };
+  const setArrows = (arrows: Arrow[]) => {
+    setBoard({
+      ...board,
+      arrows
+    });
+  };
+  // const setUsers = (users: User[]) => {
+  //   setBoard({
+  //     ...board,
+  //     users
+  //   });
+  // };
+
+  // Temporary board view state
   const [board_view_state, setBoardViewState] = useState<BoardViewState>({
     offsetX: 0,
     offsetY: 0,
     zoom: 1.0,
   });
-
-  const [tasks, setTaskList] = useState<Task[]>([
-    {
-      id: 1,
-      title: 'Gather wood',
-      description: 'Example description!',
-      width: 200,
-      height: 100,
-      posX: 200,
-      posY: 350,
-      color: "#f7d9c4"
-    },
-    {
-      id: 2,
-      title: 'Build door',
-      width: 200,
-      height: 100,
-      posX: 500,
-      posY: 300,
-      color: "#faedcb"
-    },
-    {
-      id: 3,
-      title: 'Build walls',
-      width: 200,
-      height: 100,
-      posX: 500,
-      posY: 450,
-      color: "#faedcb"
-    },
-    {
-      id: 4,
-      title: 'Find cool tree',
-      width: 200,
-      height: 100,
-      posX: 300,
-      posY: 100,
-      color: "#f7d9c4"
-    },
-    {
-      id: 5,
-      title: 'Assemble treehouse',
-      width: 200,
-      height: 100,
-      posX: 800,
-      posY: 250,
-      color: "#c9e4de"
-    },
-  ]);
-
-  const [arrows, setarrows] = useState<Arrow[]>([
-    {
-      id: 1,
-      from: 1,
-      to: 2,
-      color: "#0000ff"
-    }
-  ]);
 
   // Tool-specific states
   const [selectedTool, setSelectedTool] = useState<Tool>(Tool.Pointer);
@@ -135,7 +165,7 @@ export default function Board() {
   const handleTaskClick = (id: number) => {
     switch (selectedTool) {
       case Tool.Pointer:
-        const selected_task = tasks.find((t) => t.id == id);
+        const selected_task = board.tasks.find((t) => t.id == id);
         if (selected_task) {
           setPointerToolState({
             ...pointerToolState,
@@ -167,7 +197,7 @@ export default function Board() {
     // TODO: Technically, we should do more calculations to account for a panned canvas
     const { clientX, clientY } = e.nativeEvent;
     const newTask: Task = {
-      id: tasks.length + 1, // TODO: Better way of assigning task IDs
+      id: board.tasks.length + 1, // TODO: Better way of assigning task IDs
       title: "Untitled task",
       description: "",
       width: 200,
@@ -176,7 +206,7 @@ export default function Board() {
       posY: clientY,
       color: "#faedcb"
     };
-    setTaskList([...tasks, newTask]);
+    setTasks([...board.tasks, newTask]);
     setSelectedTool(Tool.Pointer);
     setPointerToolState({
       ...pointerToolState,
@@ -199,30 +229,30 @@ export default function Board() {
   };
 
   const updateTask = (task: Task) => {
-    const taskIdx = tasks.findIndex((t) => t.id == task.id);
+    const taskIdx = board.tasks.findIndex((t) => t.id == task.id);
     if (taskIdx == -1) {
       console.error(`Task ${task.id} not found`);
       return;
     }
     console.log(`Updating task ${task.id}`);
-    const newTasks = tasks.slice();
+    const newTasks = board.tasks.slice();
     newTasks[taskIdx] = task;
-    setTaskList(newTasks);
+    setTasks(newTasks);
   };
 
   const addArrow = (firstTaskId: number, secondTaskId: number) => {
     const newArrow: Arrow = {
-      id: arrows.length + 1, // TODO: Better way of assigning arrow IDs
+      id: board.arrows.length + 1, // TODO: Better way of assigning arrow IDs
       from: firstTaskId,
       to: secondTaskId,
       color: arrowToolState.color
     };
-    setarrows([...arrows, newArrow]);
+    setArrows([...board.arrows, newArrow]);
   };
 
   const removeArrow = (firstTaskId: number, secondTaskId: number) => {
-    const updatedArrows = arrows.filter(arrow => !(arrow.from == firstTaskId && arrow.to == secondTaskId));
-    setarrows(updatedArrows);
+    const updatedArrows = board.arrows.filter(arrow => !(arrow.from == firstTaskId && arrow.to == secondTaskId));
+    setArrows(updatedArrows);
   };
 
   return (
@@ -234,7 +264,7 @@ export default function Board() {
         onClick={selectedTool == Tool.Task ? handleAddNewTask : undefined}
       >
         <Xwrapper>
-          {tasks.map((task, idx) => {
+          {board.tasks.map((task, idx) => {
             let className = '';
             if (pointerToolState._selected_task?.id == task.id) {
               className += 'ring ring-offset-2 ring-primary ';
@@ -263,7 +293,7 @@ export default function Board() {
               />
             );
           })}
-          {arrows.map((arrow, idx) => (
+          {board.arrows.map((arrow, idx) => (
             <Xarrow
               key={idx}
               start={arrow.from.toString()}
@@ -273,7 +303,10 @@ export default function Board() {
         </Xwrapper>
       </div>
       <div className="z-10 absolute top-4 left-4 right-4 flex flex-col pointer-events-none">
-        <Navbar />
+        <Navbar
+          title={board.title}
+          handleTitleChange={(title) => setBoard({ ...board, title })}
+        />
         <div className="relative">
           <div className="absolute flex grow-0 top-64">
             <Toolbar
@@ -285,8 +318,9 @@ export default function Board() {
             {pointerToolState._selected_task ? (
               <TaskDetailsPane
                 task={pointerToolState._selected_task}
-                otherTasks={tasks.filter((task) => task.id != pointerToolState._selected_task!.id)}
-                arrows={arrows}
+                otherTasks={board.tasks.filter((task) => task.id != pointerToolState._selected_task!.id)}
+                arrows={board.arrows}
+                users={board.users}
                 handleClose={() => setPointerToolState({...pointerToolState, _selected_task: null })}
                 handleTaskUpdate={updateTask}
                 addArrow={addArrow}

@@ -10,6 +10,7 @@ interface Props {
   task: Task;
   otherTasks: Task[];
   arrows: Arrow[];
+  users: User[];
   handleClose: () => void;
   handleTaskUpdate: (task: Task) => void;
   addArrow: (firstTaskId: number, secondTaskId: number) => void;

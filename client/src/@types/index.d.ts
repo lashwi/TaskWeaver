@@ -1,7 +1,10 @@
 interface Board {
   id: number;
-  owner: User;
+  title: string;
+  owner?: User;
+  arrows: Arrow[];
   tasks: Task[];
+  users: User[];
 }
 interface Task {
   id: number;
@@ -28,6 +31,6 @@ interface Arrow {
 }
 interface User {
   name: string;
-  email: string;
-  profilePicUrl: string;
+  email?: string;
+  profilePicUrl?: string;
 }
