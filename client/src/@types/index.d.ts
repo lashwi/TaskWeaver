@@ -17,11 +17,12 @@ interface Task {
   color: string;
   description?: string;
   status?: string;
-  priority?: number;
-  deadline?: Date;
+  priority?: string;
+  deadline?: string;
   assignees?: User[];
   arrowsOut?: Arrow[];
   arrowsIn?: Arrow[];
+  timeNeeded?: string;
 }
 interface Arrow {
   id: number;

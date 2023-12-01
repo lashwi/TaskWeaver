@@ -240,6 +240,10 @@ export default function Board() {
     const newTasks = board.tasks.slice();
     newTasks[taskIdx] = task;
     setTasks(newTasks);
+    setPointerToolState({
+      ...pointerToolState,
+      _selected_task: task
+    });
   };
 
   const addArrow = (firstTaskId: number, secondTaskId: number) => {
@@ -304,19 +308,19 @@ export default function Board() {
           ))}
         </Xwrapper>
       </div>
-      <div className="z-10 absolute top-4 left-4 right-4 flex flex-col pointer-events-none">
+      <div className="z-10 absolute top-4 left-4 right-4 bottom-4 flex flex-col pointer-events-none">
         <Navbar
           title={board.title}
           handleTitleChange={(title) => setBoard({ ...board, title })}
         />
-        <div className="relative">
+        <div className="relative h-full">
           <div className="absolute flex grow-0 top-64">
             <Toolbar
               selectedTool={selectedTool}
               setSelectedTool={handleSetTool}
             />
           </div>
-          <div className="absolute top-8 right-0">
+          <div className="absolute top-8 right-0 bottom-4">
             {pointerToolState._selected_task ? (
               <TaskDetailsPane
                 task={pointerToolState._selected_task}

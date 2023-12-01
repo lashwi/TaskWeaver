@@ -1,16 +1,16 @@
 "use client";
-import React from 'react';
+import { Dismiss24Filled } from '@fluentui/react-icons';
 import styles from './TaskPopup.module.css';
-import CloseIcon from '@mui/icons-material/Close';
 
-type DependencyGraphPopupProps = {
-  onClose: () => void; // function to close the popup
+interface Props {
   task: Task;
   arrows: Arrow[];
   otherTasks: Task[];
+  onClose: () => void;
 };
 
-function DependencyView({ onClose, task, arrows, otherTasks }: DependencyGraphPopupProps) {
+export default function DependencyView(props: Props) {
+  const { task, arrows, otherTasks, onClose } = props;
   // console.log('tasks', tasksDependingOn);
   let taskIdsDependingOn = arrows.map((arrow: Arrow) => {
     if(arrow.from === task.id) return arrow.to;
@@ -29,13 +29,14 @@ function DependencyView({ onClose, task, arrows, otherTasks }: DependencyGraphPo
   };
 
   let tasksDependingOn = getTaskValuesFromIds(taskIdsDependingOn);
-  
-
   let tasksDependentOn = getTaskValuesFromIds(taskIdsDependentOn);
+
   return (
     <div className={styles.overlay}>
       <div className={styles.popup}>
-      <CloseIcon className={styles.closeButton2} onClick={onClose}></CloseIcon>
+      <button className="flex flex-row self-end p-1 rounded-lg hover:bg-surface-100">
+        <Dismiss24Filled onClick={onClose} />
+      </button>
         <div style={{ width: '50%', margin: '0px auto' }}>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
             {tasksDependentOn.map((number, idx) =>
@@ -66,5 +67,3 @@ function DependencyView({ onClose, task, arrows, otherTasks }: DependencyGraphPo
     </div>
   );
 }
-
-export default DependencyView;
