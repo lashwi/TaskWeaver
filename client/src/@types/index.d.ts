@@ -30,6 +30,7 @@ interface Arrow {
   color: string;
 }
 interface User {
+  id: number;
   name: string;
   email?: string;
   profilePicUrl?: string;
