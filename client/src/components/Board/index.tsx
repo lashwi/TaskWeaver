@@ -75,7 +75,8 @@ export default function Board() {
         height: 100,
         posX: 300,
         posY: 100,
-        color: "#f7d9c4"
+        color: "#f7d9c4",
+        textColor: "#b35b5b"
       },
       {
         id: 5,
@@ -92,7 +93,31 @@ export default function Board() {
         id: 1,
         from: 1,
         to: 2,
-        color: "#0000ff"
+        color: "#7f00f7"
+      },
+      {
+        id: 2,
+        from: 1,
+        to: 3,
+        color: "#7f00f7"
+      },
+      {
+        id: 3,
+        from: 4,
+        to: 5,
+        color: "#7f00f7"
+      },
+      {
+        id: 4,
+        from: 3,
+        to: 5,
+        color: "#7f00f7"
+      },
+      {
+        id: 5,
+        from: 2,
+        to: 5,
+        color: "#7f00f7"
       }
     ],
     users: [
@@ -139,7 +164,7 @@ export default function Board() {
   });
   const [taskToolState, setTaskToolState] = useState<TaskToolState>({color: "#faedcb"});
   const [arrowToolState, setArrowToolState] = useState<ArrowToolState>({
-    color: "#0000ff",
+    color: "#7f00f7",
     _firstId: -1
   });
 
@@ -151,7 +176,6 @@ export default function Board() {
         break;
       case Tool.Move:
         console.log('Selected move tool');
-        resetPointerToolState();
         break;
       case Tool.Task:
         console.log('Selected task tool');
@@ -314,6 +338,7 @@ export default function Board() {
               key={idx}
               start={arrow.from.toString()}
               end={arrow.to.toString()}
+              color={arrow.color}
             />
           ))}
         </Xwrapper>
@@ -322,13 +347,19 @@ export default function Board() {
         <Navbar
           title={board.title}
           handleTitleChange={(title) => setBoard({ ...board, title })}
+          handleNewBoard={() => {
+            setArrows([]);
+            setTasks([]);
+          }}
         />
         <div className="relative h-full">
-          <div className="absolute flex grow-0 top-64">
-            <Toolbar
-              selectedTool={selectedTool}
-              setSelectedTool={handleSetTool}
-            />
+          <div className="h-full flex">
+            <span className="my-auto pt-2 pb-32">
+              <Toolbar
+                selectedTool={selectedTool}
+                setSelectedTool={handleSetTool}
+              />
+            </span>
           </div>
           <div className="absolute flex grow-0 top-64">
             <ToolDetails
@@ -337,7 +368,7 @@ export default function Board() {
               setArrowColor={handleSetArrowToolColor}
             />
           </div>
-          <div className="absolute top-8 right-0 bottom-4">
+          <div className="absolute w-full top-8 bottom-4">
             {pointerToolState._selected_task ? (
               <TaskDetailsPane
                 task={pointerToolState._selected_task}
