@@ -111,7 +111,7 @@ export default function Navbar(props: Props) {
         id="tooltip-navbar"
         className="!rounded-xl"
         opacity={1}
-        place="right"
+        place="bottom"
       />
     </nav>
   );
