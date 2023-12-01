@@ -114,28 +114,25 @@ export default function Board() {
     switch (t) {
       case Tool.Pointer:
         console.log('Selected pointer tool');
-        handleSetPointerTool();
         break;
       case Tool.Move:
         console.log('Selected move tool');
-        handleSetMoveTool();
+        resetPointerToolState();
         break;
       case Tool.Task:
         console.log('Selected task tool');
-        handleAddTask();
+        resetPointerToolState();
+        // handleAddTask();
         break;
       case Tool.Arrow:
         console.log('Selected arrow tool');
-        setArrowToolState({
-          ...arrowToolState,
-          _firstId: -1
-        });
+        resetPointerToolState();
+        resetArrowToolState();
         break;
     };
   };
 
   const handleTaskClick = (id: number) => {
-    console.log(`Clicked task ${id}`);
     switch (selectedTool) {
       case Tool.Pointer:
         const selected_task = tasks.find((t) => t.id == id);
@@ -152,7 +149,7 @@ export default function Board() {
         break;
       case Tool.Arrow:
         if (id == arrowToolState._firstId) {
-          break;
+          resetArrowToolState();
         } else if (arrowToolState._firstId == -1) {
           setArrowToolState({
             ...arrowToolState,
@@ -160,37 +157,45 @@ export default function Board() {
           });
         } else {
           addArrow(arrowToolState._firstId, id);
-          setArrowToolState({
-            ...arrowToolState,
-            _firstId: -1
-          });
-          // TODO: Support switching back to previous tool
-          // setSelectedTool(Tool.Pointer);
+          resetArrowToolState();
         }
         break;
     };
   };
 
-  const handleSetPointerTool = () => {
-    // TODO: Set CSS cursor to 'default'
-  };
-
-  const handleSetMoveTool = () => {
-    // TODO: Set CSS cursor to 'move'
-  };
-
-  const handleAddTask = () => {
-    var newTasks = tasks.slice();
-    newTasks.push({
-      id: tasks.length + 1,
-      title: 'Untitled',
+  const handleAddNewTask = (e: React.MouseEvent<HTMLDivElement>) => {
+    // TODO: Technically, we should do more calculations to account for a panned canvas
+    const { clientX, clientY } = e.nativeEvent;
+    const newTask: Task = {
+      id: tasks.length + 1, // TODO: Better way of assigning task IDs
+      title: "Untitled task",
+      description: "",
       width: 200,
       height: 100,
-      posX: 50,
-      posY: 150,
+      posX: clientX,
+      posY: clientY,
       color: "#faedcb"
+    };
+    setTaskList([...tasks, newTask]);
+    setSelectedTool(Tool.Pointer);
+    setPointerToolState({
+      ...pointerToolState,
+      _selected_task: newTask
     });
-    setTaskList(newTasks);
+  }
+
+  const resetPointerToolState = () => {
+    setPointerToolState({
+      ...pointerToolState,
+      _selected_task: null
+    });
+  };
+
+  const resetArrowToolState = () => {
+    setArrowToolState({
+      ...arrowToolState,
+      _firstId: -1
+    });
   };
 
   const updateTask = (task: Task) => {
@@ -225,18 +230,39 @@ export default function Board() {
       <div
         style={{ zoom: board_view_state.zoom }}
         // className="z-0 board-bg-grid bg-white absolute left-1/2 top-1/2"
-        className="z-0 board-bg-grid bg-white absolute h-full w-full"
+        className={`z-0 board-bg-grid bg-white absolute h-full w-full ${selectedTool == Tool.Task ? 'cursor-crosshair' : ''}`}
+        onClick={selectedTool == Tool.Task ? handleAddNewTask : undefined}
       >
         <Xwrapper>
-          {tasks.map((task, idx) => (
-            // TODO: Conditional styles based on selected tool
-            <Task
-              key={idx}
-              task={task}
-              handleTaskClick={handleTaskClick}
-              handleTaskUpdate={updateTask}
-            />
-          ))}
+          {tasks.map((task, idx) => {
+            let className = '';
+            if (pointerToolState._selected_task?.id == task.id) {
+              className += 'ring ring-offset-2 ring-primary ';
+            } else if (selectedTool == Tool.Pointer) {
+              className += 'hover:cursor-pointer hover:ring hover:ring-secondary ';
+            }
+            if (arrowToolState._firstId == task.id) {
+              className += 'ring ring-offset-2 ring-secondary ';
+            }
+            switch (selectedTool) {
+              case Tool.Move:
+                className += 'hover:cursor-move ';
+                break;
+              case Tool.Arrow:
+                className += 'hover:cursor-alias ';
+                break;
+            };
+            return (
+              <Task
+                key={idx}
+                task={task}
+                className={className}
+                isMoveable={selectedTool == Tool.Move}
+                handleTaskClick={handleTaskClick}
+                handleTaskUpdate={updateTask}
+              />
+            );
+          })}
           {arrows.map((arrow, idx) => (
             <Xarrow
               key={idx}
