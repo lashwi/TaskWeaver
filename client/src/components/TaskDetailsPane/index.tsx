@@ -140,9 +140,20 @@ export default function TaskDetailsPane(props: Props) {
     });
   }
 
-  const handleAddAssignee = () => {
+  const handleAddAssignee = (selectedOptions: any) => {
     // Implement logic to add assignees to the state
+    console.log(selectedOptions);
+    const newSelectedUsers: User[] = selectedOptions.map((option: any) => ({
+      id: parseInt(option.value),
+      name: option.label,
+    }));
+
+    handleTaskUpdate({
+      ...task,
+      assignees: newSelectedUsers
+    });
   };
+  
 
   const handleSelectChangeForDependentTasks = (newValues: any) => {
     const newTaskIdsDependentOn = newValues.map((val: { value: string; }) => parseInt(val.value));
@@ -217,6 +228,8 @@ export default function TaskDetailsPane(props: Props) {
             options={userOptions}
             className="basic-multi-select"
             classNamePrefix="select"
+            onChange={handleAddAssignee}
+            defaultValue={task.assignees?.map((user) => ({ value: user.id.toString(), label: user.name }))}
           />
         </div>
         <div className="description-section flex flex-col">
