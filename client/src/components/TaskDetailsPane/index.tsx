@@ -10,6 +10,7 @@ interface Props {
   task: Task;
   otherTasks: Task[];
   arrows: Arrow[];
+  users: User[];
   handleClose: () => void;
   handleTaskUpdate: (task: Task) => void;
   addArrow: (firstTaskId: number, secondTaskId: number) => void;
@@ -33,13 +34,13 @@ export default function TaskDetailsPane(props: Props) {
     height: 630
   });
   const [showDependencyGraph, setShowDependencyGraph] = useState(false);
-  const personas = [
-    {value: '1', label: 'Alice'},
-    {value: '2', label: 'Bob'}
-  ];
   const taskOptions = otherTasks.map((t) => ({
     value: t.id.toString(),
     label: t.title
+  }));
+  const userOptions = props.users.map((u) => ({
+    value: u.id.toString(),
+    label: u.name
   }));
 
   let taskIdsDependingOn: any[] = [];
@@ -184,7 +185,7 @@ export default function TaskDetailsPane(props: Props) {
           <Select
             isMulti
             name="colors"
-            options={personas}
+            options={userOptions}
             className="basic-multi-select"
             classNamePrefix="select"
           />

@@ -6,7 +6,13 @@ import {
 } from '@fluentui/react-icons';
 import { Tooltip } from 'react-tooltip';
 
-export default function Navbar() {
+interface Props {
+  title: string;
+  handleTitleChange: (title: string) => void;
+};
+
+export default function Navbar(props: Props) {
+  const { title, handleTitleChange } = props;
   return (
     <nav className="flex flex-row gap-2 pointer-events-none [&>*]:pointer-events-auto">
       <div className="flex panel-surface-050 items-center p-1">
@@ -22,7 +28,9 @@ export default function Navbar() {
         <input
           type="text"
           className="outline-none bg-transparent h-6 focus:border-b-2 border-surface-150 mx-2 w-full min-w-[10ch] sm:w-[30ch] md:w-[40ch]"
+          defaultValue={title}
           placeholder="Untitled board"
+          onChange={() => handleTitleChange(title)}
         />
       </div>
       <div className="flex panel-surface-050 items-center">
