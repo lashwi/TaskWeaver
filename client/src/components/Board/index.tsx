@@ -290,6 +290,16 @@ export default function Board() {
     setArrows(updatedArrows);
   };
 
+  const deleteTask = (task: Task) => {
+    console.log(`Deleting task ${task.id}`);
+    const id = task.id;
+    const newTasks = board.tasks.filter(t => t.id != id);
+    setTasks(newTasks);
+    const updatedArrows = board.arrows.filter(arrow => (arrow.from != id && arrow.to != id));
+    setArrows(updatedArrows);
+    resetPointerToolState();
+  }
+
   return (
     <div className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-white">
       <div
@@ -372,6 +382,7 @@ export default function Board() {
                 handleTaskUpdate={updateTask}
                 addArrow={addArrow}
                 removeArrow={removeArrow}
+                deleteTask={deleteTask}
               />
             ) : null}
           </div>

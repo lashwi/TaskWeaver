@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         primary: "rgba(var(--color-primary), <alpha-value>)",
         secondary: "rgba(var(--color-secondary), <alpha-value>)",
+        dangerous1: "rgba(var(--color-dangerous-primary), <alpha-value>)",
+        dangerous2: "rgba(var(--color-dangerous-secondary), <alpha-value>)",
         surface: {
           "000": "rgba(var(--color-surface-000), <alpha-value>)",
           "050": "rgba(var(--color-surface-050), <alpha-value>)",

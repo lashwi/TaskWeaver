@@ -14,6 +14,7 @@ interface Props {
   handleTaskUpdate: (task: Task) => void;
   addArrow: (firstTaskId: number, secondTaskId: number) => void;
   removeArrow: (firstTaskId: number, secondTaskId: number) => void;
+  deleteTask: (task: Task) => void;
 };
 
 interface PaneState {
@@ -24,7 +25,7 @@ interface PaneState {
 };
 
 export default function TaskDetailsPane(props: Props) {
-  const { task, otherTasks, arrows, handleClose, handleTaskUpdate, addArrow, removeArrow } = props;
+  const { task, otherTasks, arrows, handleClose, handleTaskUpdate, addArrow, removeArrow, deleteTask } = props;
   const target_ref = useRef(null);
   const handle_ref = useRef(null);
   const [pane_state, setPaneState] = useState<PaneState>({
@@ -147,6 +148,11 @@ export default function TaskDetailsPane(props: Props) {
   }
   const handleDependencyGraph = () => {
     setShowDependencyGraph(!showDependencyGraph);
+  };
+
+  const handleDelete = () => {
+    deleteTask(task);
+    handleClose();
   };
 
   // Moveable handlers
@@ -353,6 +359,12 @@ export default function TaskDetailsPane(props: Props) {
               onClick={handleDependencyGraph}
             >
               View dependency graph
+            </button>
+            <button
+              className="text-white bg-dangerous1 hover:bg-dangerous2 rounded-lg p-2 text-lg mt-3"
+              onClick={handleDelete}
+            >
+              Delete task
             </button>
           </div>
         </div>
