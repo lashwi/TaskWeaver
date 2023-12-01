@@ -357,6 +357,8 @@ export default function Board() {
           title={board.title}
           handleTitleChange={(title) => setBoard({ ...board, title })}
           handleNewBoard={() => {
+            resetPointerToolState();
+            resetArrowToolState();
             setBoard({
               id: 2,
               title: "New board",
