@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Task from '@/components/Task';
 import TaskDetailsPane from '@/components/TaskDetailsPane';
 import Toolbar from '@/components/Toolbar';
+import ToolDetails from '../ToolDetails';
 import './styles.css';
 
 
@@ -136,6 +137,7 @@ export default function Board() {
   const [pointerToolState, setPointerToolState] = useState<PointerToolState>({
     _selected_task: null
   });
+  const [taskToolState, setTaskToolState] = useState<TaskToolState>({color: "#faedcb"});
   const [arrowToolState, setArrowToolState] = useState<ArrowToolState>({
     color: "#0000ff",
     _firstId: -1
@@ -163,6 +165,14 @@ export default function Board() {
         break;
     };
   };
+
+  const handleSetTaskToolColor = (c: string) => {
+    setTaskToolState({color: c});
+  }
+
+  const handleSetArrowToolColor = (c: string) => {
+    setArrowToolState({...arrowToolState, color: c});
+  }
 
   const handleTaskClick = (id: number) => {
     switch (selectedTool) {
@@ -206,7 +216,7 @@ export default function Board() {
       height: 100,
       posX: clientX,
       posY: clientY,
-      color: "#faedcb"
+      color: taskToolState.color
     };
     setTasks([...board.tasks, newTask]);
     setSelectedTool(Tool.Pointer);
@@ -318,6 +328,13 @@ export default function Board() {
             <Toolbar
               selectedTool={selectedTool}
               setSelectedTool={handleSetTool}
+            />
+          </div>
+          <div className="absolute flex grow-0 top-64">
+            <ToolDetails
+              selectedTool={selectedTool}
+              setTaskColor={handleSetTaskToolColor}
+              setArrowColor={handleSetArrowToolColor}
             />
           </div>
           <div className="absolute top-8 right-0 bottom-4">

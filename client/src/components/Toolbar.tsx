@@ -4,7 +4,6 @@ import {
   ArrowFlowUpRight24Regular,
   ArrowMove24Filled,
   ArrowMove24Regular,
-  CalendarAdd24Regular,
   Cursor24Regular,
   Cursor24Filled,
   SlideAdd24Regular,
