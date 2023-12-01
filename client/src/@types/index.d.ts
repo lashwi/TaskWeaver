@@ -15,14 +15,15 @@ interface Task {
   posY: number;
   // posZ: number;
   color: string;
+  textColor?: string;
   description?: string;
   status?: string;
   priority?: string;
   deadline?: string;
+  timeNeeded?: string;
   assignees?: User[];
   arrowsOut?: Arrow[];
   arrowsIn?: Arrow[];
-  timeNeeded?: string;
 }
 interface Arrow {
   id: number;

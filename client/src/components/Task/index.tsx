@@ -68,11 +68,14 @@ export default function Task(props: Props) {
           width: `${task.width}px`,
           height: `${task.height}px`,
           background: task.color,
+          color: task.textColor,
         }}
         ref={target_ref}
         onClick={() => handleTaskClick(task.id)}
       >
-        <p>{useDeferredValue(task.title)}</p>
+        <p>
+          {useDeferredValue(task.title)}
+        </p>
       </div>
       {isMoveable ? (
         <Moveable

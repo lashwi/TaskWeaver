@@ -216,6 +216,9 @@ export default function TaskDetailsPane(props: Props) {
                 placeholder="Untitled task"
                 rows={1}
                 spellCheck={false}
+                autoFocus={true}
+                // Move cursor to end of text
+                onFocus={(e) => {e.target.value = ''; e.target.value = task.title;}}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </span>
@@ -292,6 +295,30 @@ export default function TaskDetailsPane(props: Props) {
                   defaultValue={task.timeNeeded ?? ""}
                   spellCheck={false}
                   onChange={(e) => setTimeNeeded(e.target.value)}
+                />
+              </span>
+              <span className="flex flex-col">
+                <span>Task Color</span>
+                <input
+                  type="color"
+                  className="border-2 border-surface-150 w-full rounded-md bg-transparent"
+                  defaultValue={task.color}
+                  onChange={(e) => handleTaskUpdate({
+                    ...task,
+                    color: e.target.value
+                  })}
+                />
+              </span>
+              <span className="flex flex-col">
+                <span>Text Color</span>
+                <input
+                  type="color"
+                  className="border-2 border-surface-150 w-full rounded-md bg-transparent"
+                  defaultValue={task.textColor}
+                  onChange={(e) => handleTaskUpdate({
+                    ...task,
+                    textColor: e.target.value
+                  })}
                 />
               </span>
             </div>

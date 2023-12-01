@@ -74,7 +74,8 @@ export default function Board() {
         height: 100,
         posX: 300,
         posY: 100,
-        color: "#f7d9c4"
+        color: "#f7d9c4",
+        textColor: "#b35b5b"
       },
       {
         id: 5,
@@ -91,7 +92,31 @@ export default function Board() {
         id: 1,
         from: 1,
         to: 2,
-        color: "#0000ff"
+        color: "#7f00f7"
+      },
+      {
+        id: 2,
+        from: 1,
+        to: 3,
+        color: "#7f00f7"
+      },
+      {
+        id: 3,
+        from: 4,
+        to: 5,
+        color: "#7f00f7"
+      },
+      {
+        id: 4,
+        from: 3,
+        to: 5,
+        color: "#7f00f7"
+      },
+      {
+        id: 5,
+        from: 2,
+        to: 5,
+        color: "#7f00f7"
       }
     ],
     users: [
@@ -137,7 +162,7 @@ export default function Board() {
     _selected_task: null
   });
   const [arrowToolState, setArrowToolState] = useState<ArrowToolState>({
-    color: "#0000ff",
+    color: "#7f00f7",
     _firstId: -1
   });
 
@@ -303,6 +328,7 @@ export default function Board() {
               key={idx}
               start={arrow.from.toString()}
               end={arrow.to.toString()}
+              color={arrow.color}
             />
           ))}
         </Xwrapper>
