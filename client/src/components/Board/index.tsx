@@ -337,6 +337,10 @@ export default function Board() {
         <Navbar
           title={board.title}
           handleTitleChange={(title) => setBoard({ ...board, title })}
+          handleNewBoard={() => {
+            setArrows([]);
+            setTasks([]);
+          }}
         />
         <div className="relative h-full">
           <div className="h-full flex">
