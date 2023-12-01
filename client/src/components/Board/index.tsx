@@ -34,9 +34,6 @@ export enum Tool {
   Arrow
 };
 
-let lastTaskID = 5;
-let lastArrowID = 5;
-
 export default function Board() {
   const [board, setBoard] = useState<Board>({
     id: 1,
@@ -151,6 +148,8 @@ export default function Board() {
   //     users
   //   });
   // };
+  const [nextTaskID, setNextTaskID] = useState<number>(6);
+  const [nextArrowID, setNextArrowID] = useState<number>(6);
 
   // Temporary board view state
   const [board_view_state, setBoardViewState] = useState<BoardViewState>({
@@ -225,9 +224,8 @@ export default function Board() {
   const handleAddNewTask = (e: React.MouseEvent<HTMLDivElement>) => {
     // TODO: Technically, we should do more calculations to account for a panned canvas
     const { clientX, clientY } = e.nativeEvent;
-    lastTaskID++;
     const newTask: Task = {
-      id: lastTaskID,
+      id: nextTaskID,
       title: "Untitled task",
       description: "",
       width: 200,
@@ -236,6 +234,7 @@ export default function Board() {
       posY: clientY,
       color: "#faedcb"
     };
+    setNextTaskID(nextTaskID + 1);
     setTasks([...board.tasks, newTask]);
     setSelectedTool(Tool.Pointer);
     setPointerToolState({
@@ -275,19 +274,34 @@ export default function Board() {
   };
 
   const addArrow = (firstTaskId: number, secondTaskId: number) => {
-    lastArrowID++;
     const newArrow: Arrow = {
-      id: lastArrowID,
+      id: nextArrowID,
       from: firstTaskId,
       to: secondTaskId,
       color: arrowToolState.color
     };
+    setNextArrowID(nextArrowID + 1);
     setArrows([...board.arrows, newArrow]);
   };
 
   const removeArrow = (firstTaskId: number, secondTaskId: number) => {
     const updatedArrows = board.arrows.filter(arrow => !(arrow.from == firstTaskId && arrow.to == secondTaskId));
     setArrows(updatedArrows);
+  };
+
+  const deleteTask = (task: Task) => {
+    if (!window.confirm(`Are you sure you want to delete task "${task.title}"?`)) {
+      return;
+    }
+    console.log(`Deleting task ${task.id}`);
+    const updatedArrows = board.arrows.filter(a => (a.from != task.id && a.to != task.id));
+    const newTasks = board.tasks.filter(t => t.id != task.id);
+    setBoard({
+      ...board,
+      arrows: updatedArrows,
+      tasks: newTasks,
+    });
+    resetPointerToolState();
   };
 
   return (
@@ -299,7 +313,7 @@ export default function Board() {
         onClick={selectedTool == Tool.Task ? handleAddNewTask : undefined}
       >
         <Xwrapper>
-          {board.tasks.map((task, idx) => {
+          {board.tasks.map((task) => {
             let className = '';
             if (pointerToolState._selected_task?.id == task.id) {
               className += 'ring ring-offset-2 ring-primary ';
@@ -319,7 +333,7 @@ export default function Board() {
             };
             return (
               <Task
-                key={idx}
+                key={task.id}
                 task={task}
                 className={className}
                 isMoveable={selectedTool == Tool.Move}
@@ -328,9 +342,9 @@ export default function Board() {
               />
             );
           })}
-          {board.arrows.map((arrow, idx) => (
+          {board.arrows.map((arrow) => (
             <Xarrow
-              key={idx}
+              key={arrow.id}
               start={arrow.from.toString()}
               end={arrow.to.toString()}
               color={arrow.color}
@@ -372,6 +386,7 @@ export default function Board() {
                 handleTaskUpdate={updateTask}
                 addArrow={addArrow}
                 removeArrow={removeArrow}
+                deleteTask={deleteTask}
               />
             ) : null}
           </div>

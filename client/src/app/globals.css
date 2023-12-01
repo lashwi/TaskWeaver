@@ -6,6 +6,8 @@
   --color-primary: 127, 0, 247;
   --color-secondary: 88, 0, 133;
   --color-text: 0, 0, 0;
+  --color-dangerous-primary: 200, 20, 20;
+  --color-dangerous-secondary: 120, 0, 0;
   --color-surface-000: 255, 255, 255;
   --color-surface-050: 238, 238, 238;
   --color-surface-100: 221, 221, 221;
