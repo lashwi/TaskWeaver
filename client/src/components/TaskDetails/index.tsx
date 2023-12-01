@@ -78,18 +78,22 @@ export default function TaskDetails(props: Props) {
                 <Dropdown
                   options={['Status', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Deadline', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Priority', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
                 <Dropdown
                   options={['Time Needed', 'Option 2', 'Option 3']}
                   onChange={handleDropdownChange}
+                  curValue={""}
                 />
               </div>
             </div>
