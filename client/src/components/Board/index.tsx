@@ -34,6 +34,9 @@ export enum Tool {
   Arrow
 };
 
+let lastTaskID = 5;
+let lastArrowID = 5;
+
 export default function Board() {
   const [board, setBoard] = useState<Board>({
     id: 1,
@@ -222,8 +225,9 @@ export default function Board() {
   const handleAddNewTask = (e: React.MouseEvent<HTMLDivElement>) => {
     // TODO: Technically, we should do more calculations to account for a panned canvas
     const { clientX, clientY } = e.nativeEvent;
+    lastTaskID++;
     const newTask: Task = {
-      id: board.tasks.length + 1, // TODO: Better way of assigning task IDs
+      id: lastTaskID,
       title: "Untitled task",
       description: "",
       width: 200,
@@ -271,8 +275,9 @@ export default function Board() {
   };
 
   const addArrow = (firstTaskId: number, secondTaskId: number) => {
+    lastArrowID++;
     const newArrow: Arrow = {
-      id: board.arrows.length + 1, // TODO: Better way of assigning arrow IDs
+      id: lastArrowID,
       from: firstTaskId,
       to: secondTaskId,
       color: arrowToolState.color
