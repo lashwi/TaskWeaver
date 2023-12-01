@@ -4,7 +4,6 @@ import {
   ArrowRedo24Filled,
   ArrowUndo24Filled,
   Folder24Regular,
-  HandLeftFilled,
   Person24Filled
 } from '@fluentui/react-icons';
 import { Tooltip } from 'react-tooltip';
@@ -18,14 +17,14 @@ interface Props {
 export default function Navbar(props: Props) {
   const { title, handleTitleChange, handleNewBoard } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isBoardMenuOpen, setIsBoardMenuOpen] = useState(false);
 
-  const openDropdown = () => {
-    setIsOpen(!isOpen);
+  const toggleBoardMenu = () => {
+    setIsBoardMenuOpen(!isBoardMenuOpen);
   };
 
-  const closeDropdown = () => {
-    setIsOpen(false);
+  const closeBoardMenu = () => {
+    setIsBoardMenuOpen(false);
   };
 
   return (
@@ -34,34 +33,33 @@ export default function Navbar(props: Props) {
         <div className="relative">
           <button
             className="p-1 rounded-lg hover:bg-surface-100"
-            data-tooltip-id="tooltip-navbar"
-            data-tooltip-content="Boards"
-            onClick={openDropdown}
+            // data-tooltip-id="tooltip-navbar"
+            // data-tooltip-content="Boards"
+            onClick={toggleBoardMenu}
           >
             <Folder24Regular />
           </button>
-
-          {isOpen && (
-            <div className="origin-top-left absolute left-0 p-1 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          {isBoardMenuOpen && (
+            <div className="absolute left-0 mt-3 p-1 whitespace-nowrap panel-surface-050">
               <ul role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <li>
-                  <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={closeDropdown}>
+                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" onClick={closeBoardMenu}>
                     Save Board
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={closeDropdown}>
+                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" onClick={closeBoardMenu}>
                     Open Board
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" 
                     onClick={() => {
-                      closeDropdown(); 
+                      closeBoardMenu(); 
                       handleNewBoard();
                     }}>
                     New Board
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
