@@ -321,7 +321,7 @@ export default function Board() {
               />
             </span>
           </div>
-          <div className="absolute top-8 right-0 bottom-4">
+          <div className="absolute w-full top-8 bottom-4">
             {pointerToolState._selected_task ? (
               <TaskDetailsPane
                 task={pointerToolState._selected_task}
