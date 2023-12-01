@@ -221,6 +221,7 @@ export default function TaskDetailsPane(props: Props) {
               defaultValue={task.title}
               placeholder="Untitled task"
               rows={1}
+              spellCheck={false}
               onChange={(e) => setTitle(e.target.value)}
             />
           </span>
@@ -233,6 +234,7 @@ export default function TaskDetailsPane(props: Props) {
               defaultValue={task.description ?? ''}
               placeholder="Enter task description"
               rows={2}
+              spellCheck={false}
               onChange={(e) => setDescription(e.target.value)}
             />
           </span>
@@ -294,6 +296,7 @@ export default function TaskDetailsPane(props: Props) {
                 className="border-2 border-surface-150 rounded-md p-1"
                 placeholder="Ex: 2 hours"
                 defaultValue={task.timeNeeded ?? ""}
+                spellCheck={false}
                 onChange={(e) => setTimeNeeded(e.target.value)}
               />
             </span>

@@ -149,7 +149,6 @@ export default function Board() {
         break;
       case Tool.Move:
         console.log('Selected move tool');
-        resetPointerToolState();
         break;
       case Tool.Task:
         console.log('Selected task tool');
