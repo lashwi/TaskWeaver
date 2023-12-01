@@ -313,11 +313,13 @@ export default function Board() {
           handleTitleChange={(title) => setBoard({ ...board, title })}
         />
         <div className="relative h-full">
-          <div className="absolute flex grow-0 top-64">
-            <Toolbar
-              selectedTool={selectedTool}
-              setSelectedTool={handleSetTool}
-            />
+          <div className="h-full flex">
+            <span className="my-auto pt-2 pb-32">
+              <Toolbar
+                selectedTool={selectedTool}
+                setSelectedTool={handleSetTool}
+              />
+            </span>
           </div>
           <div className="absolute top-8 right-0 bottom-4">
             {pointerToolState._selected_task ? (
