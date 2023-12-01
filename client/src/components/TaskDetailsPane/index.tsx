@@ -152,7 +152,6 @@ export default function TaskDetailsPane(props: Props) {
 
   const handleDelete = () => {
     deleteTask(task);
-    handleClose();
   };
 
   // Moveable handlers
@@ -361,7 +360,7 @@ export default function TaskDetailsPane(props: Props) {
               View dependency graph
             </button>
             <button
-              className="text-white bg-dangerous1 hover:bg-dangerous2 rounded-lg p-2 text-lg mt-3"
+              className="text-white bg-dangerous1 hover:bg-dangerous2 rounded-lg p-2 text-lg mt-2"
               onClick={handleDelete}
             >
               Delete task
