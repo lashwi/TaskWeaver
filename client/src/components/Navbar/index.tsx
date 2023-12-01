@@ -29,42 +29,65 @@ export default function Navbar(props: Props) {
 
   return (
     <nav className="flex flex-row gap-2 pointer-events-none [&>*]:pointer-events-auto">
-      <div className="flex panel-surface-050 items-center p-1">
-        <div className="relative">
+      <div className="relative">
+        <div className="flex panel-surface-050 items-center p-1">
           <button
             className="p-1 rounded-lg hover:bg-surface-100"
-            // data-tooltip-id="tooltip-navbar"
-            // data-tooltip-content="Boards"
             onClick={toggleBoardMenu}
           >
             <Folder24Regular />
           </button>
-          {isBoardMenuOpen && (
-            <div className="absolute left-0 mt-3 p-1 whitespace-nowrap panel-surface-050">
-              <ul role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <li>
-                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" onClick={closeBoardMenu}>
-                    Save Board
-                  </button>
-                </li>
-                <li>
-                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" onClick={closeBoardMenu}>
-                    Open Board
-                  </button>
-                </li>
-                <li>
-                  <button className="w-full p-2 text-sm rounded-lg hover:bg-surface-100" 
-                    onClick={() => {
-                      closeBoardMenu(); 
-                      handleNewBoard();
-                    }}>
-                    New Board
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
         </div>
+        {isBoardMenuOpen && (
+          <div className="flex flex-col absolute left-0 mt-2 whitespace-nowrap panel-surface-050">
+            <div className="flex flex-col p-1">
+              <button
+                className="p-2 text-left text-sm rounded-lg hover:bg-surface-100 disabled:text-surface-300" 
+                onClick={() => {
+                  closeBoardMenu(); 
+                  handleNewBoard();
+                }}
+              >
+                New Board
+              </button>
+              <button
+                className="p-2 text-left text-sm rounded-lg hover:bg-surface-100 disabled:text-surface-300"
+                disabled
+                onClick={closeBoardMenu}
+              >
+                Open Board
+              </button>
+              <button
+                className="p-2 text-left text-sm rounded-lg hover:bg-surface-100 disabled:text-surface-300"
+                disabled
+                onClick={closeBoardMenu}
+              >
+                Save Board
+              </button>
+            </div>
+            <span className="w-full border-t-2 border-surface-100" />
+            <div className="flex flex-col p-1">
+              <button
+                className="p-2 text-left text-sm rounded-lg hover:bg-surface-100 disabled:text-surface-300"
+                onClick={() => {
+                  closeBoardMenu();
+                  window.alert(
+                    "TaskWeaver is a student project for CS 465 User Interface Design at UIUC.\n\n" +
+                    "Developers:\n" +
+                    "  - Zhuojun Cheng\n" +
+                    "  - Minh Duong\n" +
+                    "  - Lilly He\n" +
+                    "  - Ashwin Lamani\n" +
+                    "  - Stephanie Patterson\n\n" +
+                    "Source code: https://github.com/lashwi/TaskWeaver"
+                  )
+                }}
+              >
+                Credits
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex panel-surface-050 items-center p-1">
         <input
