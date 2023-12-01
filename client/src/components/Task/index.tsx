@@ -6,12 +6,14 @@ import './styles.css';
 
 interface Props {
   task: Task;
+  className?: string;
+  isMoveable?: boolean;
   handleTaskClick: (id: number) => void;
   handleTaskUpdate: (task: Task) => void;
 };
 
 export default function Task(props: Props) {
-  const { task, handleTaskClick, handleTaskUpdate } = props;
+  const { task, className, isMoveable, handleTaskClick, handleTaskUpdate } = props;
   const target_ref = useRef(null);
   const updateXarrow = useXarrow();
   // Event handlers
@@ -55,10 +57,10 @@ export default function Task(props: Props) {
   };
 
   return (
-    <span className="absolute left-0 top-0 task-container pointer-events-none">
+    <span className={`absolute left-0 top-0 task-container pointer-events-none ${isMoveable ? "active" : ""}`}>
       <div
         id={task.id.toString()} // TODO: Add prefix
-        className="pointer-events-auto hover:cursor-pointer select-none rounded-xl p-2 text-lg overflow-hidden"
+        className={`pointer-events-auto select-none rounded-xl p-2 text-lg overflow-hidden ${className}`}
         style={{
           position: 'relative',
           left: `${task.posX}px`,
@@ -66,34 +68,35 @@ export default function Task(props: Props) {
           width: `${task.width}px`,
           height: `${task.height}px`,
           background: task.color,
-          // cursor: isAddArrowMode ? 'grab' : 'default' // TODO
         }}
         ref={target_ref}
         onClick={() => handleTaskClick(task.id)}
       >
         <p>{useDeferredValue(task.title)}</p>
       </div>
-      <Moveable
-        className="pointer-events-auto"
-        target={target_ref}
-        draggable={true}
-        resizable={true}
-        snappable={true}
-        snapThreshold={5}
-        snapDirections={['top', 'left', 'bottom', 'right']}
-        snapGridWidth={50}
-        snapGridHeight={50}
-        // isDisplayGridGuidelines={true} // TODO: Reenable!!
-        // verticalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
-        // horizontalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
-        throttleDrag={1}
-        throttleResize={1}
-        onDrag={handleDrag}
-        onDragEnd={handleDragEnd}
-        onResizeStart={handleResizeStart}
-        onResize={handleResize}
-        onResizeEnd={handleResizeEnd}
-      />
+      {isMoveable ? (
+        <Moveable
+          className="pointer-events-auto"
+          target={target_ref}
+          draggable={true}
+          resizable={true}
+          snappable={true}
+          snapThreshold={5}
+          snapDirections={['top', 'left', 'bottom', 'right']}
+          snapGridWidth={50}
+          snapGridHeight={50}
+          // isDisplayGridGuidelines={true} // TODO: Reenable!!
+          // verticalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
+          // horizontalGuidelines={[-50,0,50,100,150,200,250,300,350,400,450,500,550]}
+          throttleDrag={1}
+          throttleResize={1}
+          onDrag={handleDrag}
+          onDragEnd={handleDragEnd}
+          onResizeStart={handleResizeStart}
+          onResize={handleResize}
+          onResizeEnd={handleResizeEnd}
+        />
+      ) : null}
     </span>
   );
 }
