@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import styles from './TaskPopup.module.css';
 import Dropdown from '@/components/Dropdown';
 // import { Button } from '@mui/joy';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import Select from 'react-select';
 
 import DependencyView from './DependencyView';
@@ -134,7 +134,7 @@ export default function TaskDetails(props: Props) {
           </div>
 
           
-          <CloseIcon className={styles.closeButton} onClick={handleClose}></CloseIcon>
+          {/* <CloseIcon className={styles.closeButton} onClick={handleClose}></CloseIcon> */}
         </div>
       </div>
     </div>

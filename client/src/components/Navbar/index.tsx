@@ -30,7 +30,7 @@ export default function Navbar(props: Props) {
           className="outline-none bg-transparent h-6 focus:border-b-2 border-surface-150 mx-2 w-full min-w-[10ch] sm:w-[30ch] md:w-[40ch]"
           defaultValue={title}
           placeholder="Untitled board"
-          onChange={() => handleTitleChange(title)}
+          onChange={(e) => handleTitleChange(e.target.value)}
         />
       </div>
       <div className="flex panel-surface-050 items-center">

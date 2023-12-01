@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { Dismiss24Filled } from '@fluentui/react-icons';
 import Dropdown from '@/components/Dropdown';
 import DependencyView from '@/components/TaskDetails/DependencyView';
-import './ResizablePane.css';
 
 interface Props {
   task: Task;
@@ -107,19 +106,17 @@ export default function TaskDetailsPane(props: Props) {
     setShowDependencyGraph(!showDependencyGraph);
   };
 
-  const handleDropdownChange_status = (selectedValue: string) => {
-    console.log(selectedValue);
+  const handleDropdownChange_status = (status: string) => {
     handleTaskUpdate({
       ...task,
-      status:selectedValue
+      status
     });
   };
 
-  const handleDropdownChange_priority = (selectedValue: string) => {
-    console.log(selectedValue);
+  const handleDropdownChange_priority = (priority: string) => {
     handleTaskUpdate({
       ...task,
-      priority:selectedValue
+      priority
     });
   };
 
@@ -189,132 +186,146 @@ export default function TaskDetailsPane(props: Props) {
     }
   }
 
+  useEffect(() => {
+    let taskDetailsPane = document.getElementById('task-details');
+    taskDetailsPane?.querySelectorAll("textarea").forEach((textarea) => {
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
+      textarea.addEventListener("input", () => {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      });
+    });
+  });
+
   return (
-    <span key={task.id} className="pointer-events-auto">
+    <span id="task-details" key={task.id} className="pointer-events-auto">
       <div
-        className="panel-surface-050 p-1"
+        className="panel-surface-050 p-1 overflow-hidden flex flex-col max-h-full"
         style={{
           position: "relative",
           left: `${pane_state.posX}px`,
           top: `${pane_state.posY}px`,
           width: `${pane_state.width}px`,
-          height: `${pane_state.height}px`
+          // height: `${pane_state.height}px`
         }}
         ref={target_ref}
       >
-        <div className="flex items-center justify-end">
-          <button className="flex flex-row p-1 rounded-lg hover:bg-surface-100">
-            <Dismiss24Filled onClick={handleClose} />
-          </button>
-        </div>
-
-        <div className="assignee-section">
-          <div className="title">Title: </div>
-          <input
-            type="text"
-            placeholder="Untitled task"
-            defaultValue={task.title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="inputGroup" style={{top: '15px'}}>
-          <div style={{ display: 'flex', alignItems: 'center',top: '15px' }}>
-            <div style={{ marginRight: "6px" }}>Add Assignee:</div>
-            <div className="addButton">+</div>
-          </div>
-          <Select
-            isMulti
-            name="colors"
-            options={userOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            onChange={handleAddAssignee}
-            defaultValue={task.assignees?.map((user) => ({ value: user.id.toString(), label: user.name }))}
-          />
-        </div>
-        <div className="description-section flex flex-col">
-          <span>Description:</span>
-          <textarea
-            className='description-input'
-            placeholder="Enter task description"
-            defaultValue={task.description ?? ''}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className='flex flex-row w-full mb-4 mt-4'>
-          <div className='grid grid-cols-2 gap-2 border w-full bg-gray-200 rounded-20 p-1'>
-            <span className='flex flex-col'>Status
-            <Dropdown 
-              options={['Status','To Do','Doing','Done']}
-              // onChange={handleDropdownChange}
-              onChange={(e) => handleDropdownChange_status(e)}
-              curValue={task.status || ""}
+        <button className="flex flex-row self-end p-1 rounded-lg hover:bg-surface-100">
+          <Dismiss24Filled onClick={handleClose} />
+        </button>
+        <div className="flex flex-col grow px-2 pb-2 gap-1 overflow-y-auto">
+          <span className="flex flex-col">
+            <textarea
+              className="resize-none overflow-y-hidden outline-none bg-transparent focus:border-b-2 border-surface-150 w-full text-xl font-bold"
+              defaultValue={task.title}
+              placeholder="Untitled task"
+              rows={1}
+              onChange={(e) => setTitle(e.target.value)}
             />
+          </span>
+          <span className="flex flex-col">
+            <span>
+              Description
             </span>
-            
-            <span className='flex flex-col'> Deadline
-            {/* <Dropdown 
-              options={['Deadline','Option2','Option3']}
-              onChange={handleDropdownChange}
-            /> */}
-            <input type="date" id="start" name="trip-start" value= {task.deadline || "2023-12-30"} min="2023-01-01" max="2024-12-31" className='h-9 rounded-lg p-2' onChange={(e)=> setDDL(e)}/>
-
-            </span>
-            
-            <span className='flex flex-col'> Priority
-            <Dropdown 
-              options={['Priority','Critical','High','Medium','Low']}
-              onChange={(e) => handleDropdownChange_priority(e)}
-              curValue={task.priority || ""}
+            <textarea
+              className="resize-none overflow-y-hidden outline-none border-2 border-surface-150 w-full rounded-md px-2 py-1"
+              defaultValue={task.description ?? ''}
+              placeholder="Enter task description"
+              rows={2}
+              onChange={(e) => setDescription(e.target.value)}
             />
+          </span>
+          <span className="flex flex-col">
+            <span>
+              Assignees
             </span>
-            
-            <span className='flex flex-col'> Time Needed
-            <input
-              className='rounded-lg p-2'
-              type="text"
-              placeholder="Time Needed"
-              defaultValue={task.timeNeeded ?? ""}
-              onChange={(e) => setTimeNeeded(e.target.value)}
+            <Select
+              isMulti
+              options={userOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={handleAddAssignee}
+              defaultValue={task.assignees?.map((user) => ({ value: user.id.toString(), label: user.name }))}
             />
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            <span className="flex flex-col">
+              <span>
+                Status
+              </span>
+              <Dropdown 
+                options={['N/A','To Do','Doing','Done']}
+                curValue={task.status || ""}
+                onChange={(e) => handleDropdownChange_status(e)}
+              />
             </span>
-            
+            <span className="flex flex-col">
+              <span>
+                Deadline
+              </span>
+              <input
+                id="start"
+                type="date"
+                name="trip-start"
+                className="border-2 border-surface-150 rounded-md p-1"
+                value={task.deadline || "2023-12-30"}
+                min="2023-01-01"
+                max="2024-12-31"
+                onChange={(e)=> setDDL(e)}
+              />
+            </span>
+            <span className="flex flex-col">
+              <span>
+                Priority
+              </span>
+              <Dropdown 
+                options={['N/A','Critical','High','Normal','Low']}
+                curValue={task.priority || ""}
+                onChange={(e) => handleDropdownChange_priority(e)}
+              />
+            </span>
+            <span className="flex flex-col">
+              <span>
+                Time Needed
+              </span>
+              <input
+                type="text"
+                className="border-2 border-surface-150 rounded-md p-1"
+                placeholder="Ex: 2 hours"
+                defaultValue={task.timeNeeded ?? ""}
+                onChange={(e) => setTimeNeeded(e.target.value)}
+              />
+            </span>
           </div>
-        </div>
-
-        <div className="inputGroup">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ marginRight: "6px" }}>This task depends on:</div>
-            <div className="addButton">+</div>
-          </div>
-          <Select
-            isMulti
-            name="colors"
-            options={taskOptions}
-            defaultValue={tasksDependentOn}
-            onChange={handleSelectChangeForDependentTasks}
-            className="basic-multi-select"
-            classNamePrefix="select"
-          />
-        </div>
-        <div className= "inputGroup">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ marginRight: "6px" }}>Depends on this task:</div>
-            <div className="addButton">+</div>
-          </div>
-          <Select
-            isMulti
-            name="colors"
-            defaultValue={tasksDependingOn}
-            onChange={handleSelectChangeForDependingTasks}
-            options={taskOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-          />
-        </div>
-        <div>
+          <span className="flex flex-col">
+            <span>
+              Previous tasks this task depends on:
+            </span>
+            <Select
+              isMulti
+              options={taskOptions}
+              defaultValue={tasksDependentOn}
+              onChange={handleSelectChangeForDependentTasks}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+          </span>
+          <span className="flex flex-col">
+            <span>
+              Next tasks that depend on this task:
+            </span>
+            <Select
+              isMulti
+              options={taskOptions}
+              defaultValue={tasksDependingOn}
+              onChange={handleSelectChangeForDependingTasks}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+          </span>
           <button
-            className="bottomButton"
+            className="text-white bg-primary hover:bg-secondary rounded-lg p-2 text-lg mt-3"
             onClick={handleDependencyGraph}
           >
             View dependency graph
