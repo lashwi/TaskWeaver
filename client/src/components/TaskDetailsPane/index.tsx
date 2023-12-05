@@ -206,14 +206,17 @@ export default function TaskDetailsPane(props: Props) {
           }}
         >
           <div className="flex flex-row gap-1">
-            <div ref={handle_ref} className="flex-grow rounded-lg hover:cursor-move hover:bg-surface-100">
+            <div ref={handle_ref} className="flex flex-row flex-grow rounded-lg hover:cursor-move hover:bg-surface-100">
+              <span className="p-1 opacity-0">
+                <Dismiss24Filled />
+              </span>
               <div className="w-16 h-2 rounded-full bg-surface-300 mt-2 mx-auto"></div>
             </div>
             <button className="p-1 rounded-lg hover:bg-surface-100">
               <Dismiss24Filled onClick={handleClose} />
             </button>
           </div>
-          <div className="flex flex-col grow px-2 pt-1 pb-2 gap-1 overflow-y-auto">
+          <div className="flex flex-col grow px-2 pt-1 pb-2 gap-3 overflow-y-auto">
             <span className="flex flex-col">
               <textarea
                 className="resize-none overflow-y-hidden outline-none bg-transparent focus:border-b-2 border-surface-150 w-full text-xl font-bold"
@@ -228,9 +231,9 @@ export default function TaskDetailsPane(props: Props) {
               />
             </span>
             <span className="flex flex-col">
-              <span>
+              {/* <span>
                 Description
-              </span>
+              </span> */}
               <textarea
                 className="resize-none overflow-y-hidden outline-none border-2 border-surface-150 w-full rounded-md px-2 py-1"
                 defaultValue={task.description ?? ''}
@@ -240,6 +243,7 @@ export default function TaskDetailsPane(props: Props) {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </span>
+            <hr className="border-surface-150 border-1" />
             <span className="flex flex-col">
               <span>
                 Assignees
@@ -253,7 +257,7 @@ export default function TaskDetailsPane(props: Props) {
                 defaultValue={task.assignees?.map((user) => ({ value: user.id.toString(), label: user.name }))}
               />
             </span>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <span className="flex flex-col">
                 <span>
                   Status
@@ -327,6 +331,7 @@ export default function TaskDetailsPane(props: Props) {
                 />
               </span>
             </div>
+            <hr className="border-surface-150 border-1" />
             <span className="flex flex-col">
               <span>
                 Previous tasks this task depends on:
@@ -353,18 +358,20 @@ export default function TaskDetailsPane(props: Props) {
                 classNamePrefix="select"
               />
             </span>
-            <button
-              className="text-white bg-primary hover:bg-secondary rounded-lg p-2 text-lg mt-3"
-              onClick={handleDependencyGraph}
-            >
-              View dependency graph
-            </button>
-            <button
-              className="text-white bg-dangerous1 hover:bg-dangerous2 rounded-lg p-2 text-lg mt-2"
-              onClick={handleDelete}
-            >
-              Delete task
-            </button>
+            <span className="flex flex-col">
+              <button
+                className="text-white bg-primary hover:bg-secondary rounded-lg p-2 text-lg mt-3"
+                onClick={handleDependencyGraph}
+              >
+                View dependency graph
+              </button>
+              <button
+                className="text-white bg-dangerous1 hover:bg-dangerous2 rounded-lg p-2 text-lg mt-2"
+                onClick={handleDelete}
+              >
+                Delete task
+              </button>
+            </span>
           </div>
         </div>
         <Moveable
